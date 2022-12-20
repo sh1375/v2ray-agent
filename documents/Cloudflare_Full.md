@@ -12,9 +12,10 @@
     + [3.根据提示修改godaddy的dns解析](#3根据提示修改godaddy的dns解析)
   * [4.增加cloudflare域名解析](#4增加cloudflare域名解析)
   * [5.修改godaddy SSL/TLS](#5修改godaddy-ssltls)
-- [2.vps配置Nginx](#2vps配置nginx)
+- [2.vps配置Nginx、https](#2vps配置nginxhttps)
   * [1.安装Nginx](#1安装Nginx)
   * [2.nginx配置文件](#2nginx配置文件)
+  * [3.生成https](#3生成https)
 - [3.配置v2ray](#3配置v2ray)
   * [1.安装v2ray](#1安装v2ray)
   * [2.v2ray配置文件](#v2ray配置文件)
@@ -23,7 +24,6 @@
   * [1.MacOS](#1macos)
   * [2.windows](#2windows)
 
-  
 # 1.准备工作
 ## 1.注册[cloudflare](cloudflare.com)
 ## 2.注册[godaddy](https://www.godaddy.com/)并购买域名或者使用免费域名[freenom](https://freenom.com/)
@@ -51,10 +51,10 @@
 <img src="https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/fodder/cloudflare_record_dns.png" width=400>
 
 ## 5.修改godaddy SSL/TLS
-- 如果vps选择使用https，需要把类型修改为Flexible
-<img src="https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/fodder/cloudflare_tls_Flexible.png" width=400>
+- 如果vps选择使用https，需要把类型修改为Full
+<img src="https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/fodder/cloudflare_tls.png" width=400>
 
-# 2.vps配置Nginx
+# 2.vps配置Nginx、https
 ## 1.安装Nginx
 ```
 yum install nginx
@@ -63,11 +63,68 @@ yum install nginx
 
 - 1.下载配置文件并替换默认文件
 ```
-cd /etc/nginx&&rm -rf /etc/nginx/nginx.conf&&wget https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/config/nginx_Flexible.conf&&mv /etc/nginx/nginx_Flexible.conf /etc/nginx/nginx.conf
+cd /etc/nginx&&rm -rf /etc/nginx/nginx.conf&&wget https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/config/nginx.conf
 # 如果缺少wget 则执行下面的命令，然后重复上面的命令
 yum install wget
 ```
 - 将下载好的文件中关于ls.xxx.xyz的内容都替换成你的二级域名
+
+## 3.生成https
+
+- 1.安装acme.sh
+```
+curl https://get.acme.sh | sh
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                               Dload  Upload   Total   Spent    Left  Speed
+100   671  100   671    0     0    680      0 --:--:-- --:--:-- --:--:--   679
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                               Dload  Upload   Total   Spent    Left  Speed
+100  112k  100  112k    0     0   690k      0 --:--:-- --:--:-- --:--:--  693k
+[Fri 30 Dec 01:03:32 GMT 2016] Installing from online archive.
+[Fri 30 Dec 01:03:32 GMT 2016] Downloading https://github.com/Neilpang/acme.sh/archive/master.tar.gz
+[Fri 30 Dec 01:03:33 GMT 2016] Extracting master.tar.gz
+[Fri 30 Dec 01:03:33 GMT 2016] Installing to /home/user/.acme.sh
+[Fri 30 Dec 01:03:33 GMT 2016] Installed to /home/user/.acme.sh/acme.sh
+[Fri 30 Dec 01:03:33 GMT 2016] Installing alias to '/home/user/.profile'
+[Fri 30 Dec 01:03:33 GMT 2016] OK, Close and reopen your terminal to start using acme.sh
+[Fri 30 Dec 01:03:33 GMT 2016] Installing cron job
+no crontab for user
+no crontab for user
+[Fri 30 Dec 01:03:33 GMT 2016] Good, bash is found, so change the shebang to use bash as preferred.
+[Fri 30 Dec 01:03:33 GMT 2016] OK
+[Fri 30 Dec 01:03:33 GMT 2016] Install success!
+```
+
+- 2.生成https证书
+```
+# 替换ls.xxx.xyz为自己的域名
+sudo ~/.acme.sh/acme.sh --issue -d ls.xxx.xyz --standalone -k ec-256
+
+# 如果提示Please install socat tools first.则执行，安装完成后继续重复执行上面的命令
+yum install socat
+```
+
+- 3.安装证书
+```
+# 替换ls.xxx.xyz为自己的域名
+~/.acme.sh/acme.sh --installcert -d ls.xxx.xyz --fullchainpath /etc/nginx/ls.xxx.xyz.crt --keypath /etc/nginx/ls.xxx.xyz.key --ecc
+```
+
+- 4.修改/etc/nginx/nginx.conf
+```
+# 将下面这部分前面的#去掉，并将ssl_certificate、ssl_certificate_key修改成自己的路径
+
+# listen 443 ssl;
+# ssl_certificate /etc/nginx/ls.xx.xyz.crt;
+# ssl_certificate_key /etc/nginx/ls.xx.xyz.key;
+# server_name ls.xx.xyz
+```
+
+- 5.每一次生成https证书后有效期只有三个月，需要快过期时更新（剩余七天内可以重新生成）
+```
+# 替换ls.xxx.xyz为自己的域名
+sudo ~/.acme.sh/acme.sh --renew -d ls.xxx.xyz --force --ecc
+```
 
 # 3.配置v2ray
 ## 1.安装v2ray
@@ -92,6 +149,7 @@ cd&&wget https://raw.githubusercontent.com/Wizard89/v2ray-agent/master/config/co
 ```
 /usr/bin/v2ray/v2ray -config ./config_ws_tls.json&
 ```
+
 
 # 4.客户端
 ## 1.MacOS
