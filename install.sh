@@ -1222,7 +1222,7 @@ acmeInstallSSL() {
 		txtValue=$(tail -n 10 /etc/v2ray-agent/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
 		if [[ -n "${txtValue}" ]]; then
 			echoContent green " ---> 请手动添加DNS TXT记录"
-			echoContent yellow " ---> 添加方法请参考此教程，https://github.com/mack-a/v2ray-agent/blob/master/documents/dns_txt.md"
+			echoContent yellow " ---> 添加方法请参考此教程，https://github.com/sh1375/v2ray-agent/blob/master/documents/dns_txt.md"
 			echoContent yellow " ---> 如同一个域名多台机器安装通配符证书，请添加多个TXT记录，不需要修改以前添加的TXT记录"
 			echoContent green " --->  name：_acme-challenge"
 			echoContent green " --->  value：${txtValue}"
@@ -1420,7 +1420,7 @@ nginxBlog() {
 		if [[ "${nginxBlogInstallStatus}" == "y" ]]; then
 			rm -rf /usr/share/nginx/html
 			randomNum=$((RANDOM % 6 + 1))
-			wget -q -P /usr/share/nginx https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
+			wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 			unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 			rm -f /usr/share/nginx/html${randomNum}.zip*
 			echoContent green " ---> 添加伪装站点成功"
@@ -1428,7 +1428,7 @@ nginxBlog() {
 	else
 		randomNum=$((RANDOM % 6 + 1))
 		rm -rf /usr/share/nginx/html
-		wget -q -P /usr/share/nginx https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
+		wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 		unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 		rm -f /usr/share/nginx/html${randomNum}.zip*
 		echoContent green " ---> 添加伪装站点成功"
@@ -3076,7 +3076,7 @@ customCDNIP() {
 	echoContent red "\n=============================================================="
 	echoContent yellow "# 注意事项"
 	echoContent yellow "\n教程地址:"
-	echoContent skyBlue "https://github.com/mack-a/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
+	echoContent skyBlue "https://github.com/sh1375/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
 	echoContent red "\n如对Cloudflare优化不了解，请不要使用"
 	echoContent yellow "\n 1.移动:104.16.123.96"
 	echoContent yellow " 2.联通:www.cloudflare.com"
@@ -3527,9 +3527,9 @@ updateNginxBlog() {
 	if [[ "${selectInstallNginxBlogType}" =~ ^[1-9]$ ]]; then
 		rm -rf /usr/share/nginx/*
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /usr/share/nginx "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
+			wget -c -q --show-progress -P /usr/share/nginx "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
 		else
-			wget -c -P /usr/share/nginx "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
+			wget -c -P /usr/share/nginx "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
 		fi
 
 		unzip -o "/usr/share/nginx/html${selectInstallNginxBlogType}.zip" -d /usr/share/nginx/html >/dev/null
@@ -3975,9 +3975,9 @@ updateV2RayAgent() {
 	echoContent skyBlue "\n进度  $1/${totalProgress} : 更新v2ray-agent脚本"
 	rm -rf /etc/v2ray-agent/install.sh
 	if wget --help | grep -q show-progress; then
-		wget -c -q --show-progress -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh"
+		wget -c -q --show-progress -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh"
 	else
-		wget -c -q -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh"
+		wget -c -q -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh"
 	fi
 
 	sudo chmod 700 /etc/v2ray-agent/install.sh
@@ -3988,7 +3988,7 @@ updateV2RayAgent() {
 	echoContent yellow " ---> 请手动执行[vasma]打开脚本"
 	echoContent green " ---> 当前版本:${version}\n"
 	echoContent yellow "如更新不成功，请手动执行下面命令\n"
-	echoContent skyBlue "wget -P /root -N --no-check-certificate https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh && chmod 700 /root/install.sh && /root/install.sh"
+	echoContent skyBlue "wget -P /root -N --no-check-certificate https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh && chmod 700 /root/install.sh && /root/install.sh"
 	echo
 	exit 0
 }
@@ -4101,7 +4101,7 @@ EOF
 # 脚本快捷方式
 aliasInstall() {
 
-	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:mack-a"; then
+	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:sh1375"; then
 		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
 		local vasmaType=
 		if [[ -d "/usr/bin/" ]]; then
@@ -4537,7 +4537,7 @@ dokodemoDoorUnblockStreamingMedia() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : 任意门落地机解锁流媒体"
 	echoContent red "\n=============================================================="
 	echoContent yellow "# 注意事项"
-	echoContent yellow "任意门解锁详解，请查看此文章[https://github.com/mack-a/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
+	echoContent yellow "任意门解锁详解，请查看此文章[https://github.com/sh1375/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
 	echoContent yellow "1.添加出站"
 	echoContent yellow "2.添加入站"
@@ -5405,13 +5405,13 @@ manageHysteria() {
 	echoContent red "\n=============================================================="
 	local hysteriaStatus=
 	if [[ -n "${hysteriaConfigPath}" ]]; then
-		echoContent yellow "1.重新安装"
-		echoContent yellow "2.卸载"
-		echoContent yellow "3.更新core"
-		echoContent yellow "4.查看日志"
+		echoContent yellow "1.Reinstall"
+		echoContent yellow "2.uninstall"
+		echoContent yellow "3.update core"
+		echoContent yellow "4.View log"
 		hysteriaStatus=true
 	else
-		echoContent yellow "1.安装"
+		echoContent yellow "1.install"
 	fi
 
 	echoContent red "=============================================================="
@@ -5431,50 +5431,50 @@ manageHysteria() {
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
-	echoContent green "作者:mack-a"
-	echoContent green "当前版本:v2.6.13"
-	echoContent green "Github:https://github.com/mack-a/v2ray-agent"
-	echoContent green "描述:八合一共存脚本\c"
+	echoContent green "author:sh1375"
+	echoContent green "Current version:v2.6.13"
+	echoContent green "Github:https://github.com/sh1375/v2ray-agent"
+	echoContent green "Description:Eight-in-one coexistence script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
 	echoContent red "                        推广区                      "
-	echoContent green "AFF捐赠：https://github.com/mack-a/v2ray-agent/blob/master/documents/donation_aff.md\n"
-	echoContent green "虚拟币捐赠：0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
-	echoContent green "推广可联系TG：https://t.me/mackaff"
+	echoContent green "AFF donate：https://github.com/sh1375/v2ray-agent/blob/master/documents/donation_aff.md\n"
+	echoContent green "Virtual currency donation：0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
+	echoContent green "Promotion can be contacted TG：https://t.me/"
 	echoContent red "=============================================================="
 	if [[ -n "${coreInstallType}" ]]; then
-		echoContent yellow "1.重新安装"
+		echoContent yellow "1.Reinstall"
 	else
-		echoContent yellow "1.安装"
+		echoContent yellow "1.install"
 	fi
 
-	echoContent yellow "2.任意组合安装"
+	echoContent yellow "2.Any combination of installation"
 	if echo ${currentInstallProtocolType} | grep -q trojan; then
-		echoContent yellow "3.切换VLESS[XTLS]"
+		echoContent yellow "3.Switch VLESS[XTLS]"
 	elif echo ${currentInstallProtocolType} | grep -q 0; then
-		echoContent yellow "3.切换Trojan[XTLS]"
+		echoContent yellow "3.Switch Trojan[XTLS]"
 	fi
 
-	echoContent yellow "4.Hysteria管理"
-	echoContent skyBlue "-------------------------工具管理-----------------------------"
-	echoContent yellow "5.账号管理"
-	echoContent yellow "6.更换伪装站"
-	echoContent yellow "7.更新证书"
-	echoContent yellow "8.更换CDN节点"
-	echoContent yellow "9.IPv6分流"
-	echoContent yellow "10.WARP分流"
-	echoContent yellow "11.流媒体工具"
-	echoContent yellow "12.添加新端口"
-	echoContent yellow "13.BT下载管理"
-	echoContent yellow "14.切换alpn"
-	echoContent yellow "15.域名黑名单"
-	echoContent skyBlue "-------------------------版本管理-----------------------------"
-	echoContent yellow "16.core管理"
-	echoContent yellow "17.更新脚本"
-	echoContent yellow "18.安装BBR、DD脚本"
-	echoContent skyBlue "-------------------------脚本管理-----------------------------"
-	echoContent yellow "19.查看日志"
-	echoContent yellow "20.卸载脚本"
+	echoContent yellow "4.Hysteria Management"
+	echoContent skyBlue "-------------------------Tool management-----------------------------"
+	echoContent yellow "5.Account Management"
+	echoContent yellow "6.Change the camouflage station"
+	echoContent yellow "7.Renew certificate"
+	echoContent yellow "8.Replace CDN node"
+	echoContent yellow "9.IPv6 Shunt"
+	echoContent yellow "10.WARP Shunt"
+	echoContent yellow "11.Streaming tools"
+	echoContent yellow "12.Add a New Port"
+	echoContent yellow "13.BT Download Management"
+	echoContent yellow "14.Switch alpn"
+	echoContent yellow "15.Domain name blacklist"
+	echoContent skyBlue "-------------------------Version management-----------------------------"
+	echoContent yellow "16.core management"
+	echoContent yellow "17.Update script"
+	echoContent yellow "18.install BBR、DD script"
+	echoContent skyBlue "-------------------------Script management-----------------------------"
+	echoContent yellow "19.View log"
+	echoContent yellow "20.Uninstall script"
 	echoContent red "=============================================================="
 	mkdirTools
 	aliasInstall
