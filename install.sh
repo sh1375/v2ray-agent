@@ -3919,9 +3919,9 @@ removeUser() {
 
 	if echo ${currentInstallProtocolType} | grep -q 0 || echo ${currentInstallProtocolType} | grep -q trojan; then
 		jq -r -c .inbounds[0].settings.clients[].email ${configPath}${frontingType}.json | awk '{print NR""":"$0}'
-		read -r -p "请选择要删除的用户编号[仅支持单个删除]:" delUserIndex
+		read -r -p "Please select the user number you want to delete [only single deletion is supported]:" delUserIndex
 		if [[ $(jq -r '.inbounds[0].settings.clients|length' ${configPath}${frontingType}.json) -lt ${delUserIndex} ]]; then
-			echoContent red " ---> 选择错误"
+			echoContent red " ---> Wrong choice"
 		else
 			delUserIndex=$((delUserIndex - 1))
 			local vlessTcpResult
