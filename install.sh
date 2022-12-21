@@ -4513,10 +4513,10 @@ streamingToolbox() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : 流媒体工具箱"
 	echoContent red "\n=============================================================="
 	#	echoContent yellow "1.Netflix检测"
-	echoContent yellow "1.任意门落地机解锁流媒体"
-	echoContent yellow "2.DNS解锁流媒体"
-	echoContent yellow "3.VMess+WS+TLS解锁流媒体"
-	read -r -p "请选择:" selectType
+	echoContent yellow "1.Unlock streaming media with any door landing machine"
+	echoContent yellow "2.DNS unblocks streaming media"
+	echoContent yellow "3.VMess+WS+TLS Unlock streaming media"
+	read -r -p "Please select:" selectType
 
 	case ${selectType} in
 	1)
@@ -5297,14 +5297,14 @@ cronRenewTLS() {
 manageAccount() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : 账号管理"
 	echoContent red "\n=============================================================="
-	echoContent yellow "# 每次删除、添加账号后，需要重新查看订阅生成订阅"
-	echoContent yellow "# 如安装了Hysteria，账号会同时添加到Hysteria\n"
-	echoContent yellow "1.查看账号"
-	echoContent yellow "2.查看订阅"
-	echoContent yellow "3.添加用户"
-	echoContent yellow "4.删除用户"
+	echoContent yellow "# Every time you delete or add an account, you need to re-view the subscription to generate a subscription"
+	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria\n"
+	echoContent yellow "1.View account"
+	echoContent yellow "2.View subscription"
+	echoContent yellow "3.Add user"
+	echoContent yellow "4.Delete user"
 	echoContent red "=============================================================="
-	read -r -p "请输入:" manageAccountStatus
+	read -r -p "Please enter:" manageAccountStatus
 	if [[ "${manageAccountStatus}" == "1" ]]; then
 		showAccounts 1
 	elif [[ "${manageAccountStatus}" == "2" ]]; then
@@ -5314,7 +5314,7 @@ manageAccount() {
 	elif [[ "${manageAccountStatus}" == "4" ]]; then
 		removeUser
 	else
-		echoContent red " ---> 选择错误"
+		echoContent red " ---> Wrong choice"
 	fi
 }
 
@@ -5322,8 +5322,8 @@ manageAccount() {
 subscribe() {
 	if [[ -n "${configPath}" ]]; then
 		echoContent skyBlue "-------------------------备注---------------------------------"
-		echoContent yellow "# 查看订阅时会重新生成订阅"
-		echoContent yellow "# 每次添加、删除账号需要重新查看订阅"
+		echoContent yellow "# The subscription will be regenerated when viewing the subscription"
+		echoContent yellow "# You need to re-view the subscription every time you add or delete an account"
 		rm -rf /etc/v2ray-agent/subscribe/*
 		rm -rf /etc/v2ray-agent/subscribe_tmp/*
 		showAccounts >/dev/null
@@ -5365,17 +5365,17 @@ switchAlpn() {
 
 	echoContent red "\n=============================================================="
 	echoContent green "当前alpn首位为:${currentAlpn}"
-	echoContent yellow "  1.当http/1.1首位时，trojan可用，gRPC部分客户端可用【客户端支持手动选择alpn的可用】"
-	echoContent yellow "  2.当h2首位时，gRPC可用，trojan部分客户端可用【客户端支持手动选择alpn的可用】"
-	echoContent yellow "  3.如客户端不支持手动更换alpn，建议使用此功能更改服务端alpn顺序，来使用相应的协议"
+	echoContent yellow "  1.When http/1.1 is enabled, trojan is available, and some gRPC clients are available [The client supports manual selection of the availability of alpn]"
+	echoContent yellow "  2.When h2 starts, gRPC is available, and some trojan clients are available [the client supports manual selection of the availability of alpn]"
+	echoContent yellow "  3.If the client does not support manual replacement of alpn, it is recommended to use this function to change the order of alpn on the server side to use the corresponding protocol"
 	echoContent red "=============================================================="
 
 	if [[ "${currentAlpn}" == "http/1.1" ]]; then
-		echoContent yellow "1.切换alpn h2 首位"
+		echoContent yellow "1.Switch alpn h2 First place"
 	elif [[ "${currentAlpn}" == "h2" ]]; then
-		echoContent yellow "1.切换alpn http/1.1 首位"
+		echoContent yellow "1.Switch alpn http/1.1 First place"
 	else
-		echoContent red '不符合'
+		echoContent red 'Does not meet'
 	fi
 
 	echoContent red "=============================================================="
@@ -5437,7 +5437,7 @@ menu() {
 	echoContent green "Description:Eight-in-one coexistence script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
-	echoContent red "                        推广区                      "
+	echoContent red "                        Promotion area                      "
 	echoContent green "AFF donate：https://github.com/sh1375/v2ray-agent/blob/master/documents/donation_aff.md\n"
 	echoContent green "Virtual currency donation：0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
 	echoContent green "Promotion can be contacted TG：https://t.me/"
