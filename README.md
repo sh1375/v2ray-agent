@@ -12,6 +12,8 @@
 - [Traffic transit](https://github.com/sh1375/v2ray-agent/blob/master/documents/traffic_relay.md)
 - [Manual self-built tutorial](https://github.com/sh1375/v2ray-agent/blob/master/documents/Cloudflare_install_manual.md)
 - [ssh Getting started tutorial](https://www.v2ray-agent.com/2020-12-16-ssh%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B)
+- [TG group](https://t.me/technologyshare)、[TG Channel-Update notification](https://t.me/v2rayAgentChannel)、[Blog address](https://www.v2ray-agent.com/)
+- **Please give one ⭐Support it**
 
 * * *
 
@@ -68,6 +70,12 @@
 - Wide shift/CN2/Southern Union +Hong Kong AZ+ Global
 - Transit + cloudflare + landing machine [can pull the world]
 
+## Combination recommendation
+
+- Transit/gia/AS4837/AS9929 ---> VLESS+TCP+TLS/XTLS、Trojan
+- Mobile broadband ---> VMESS+WS+TLS/VLESS+WS+TLS/VLESS+gRPC+TLS/Trojan+gRPC+TLS + Cloudflare
+- cloudflare-> VLESS+gRPC+TLS/Trojan+gRPC+TLS[Multiplexing, low latency]
+
 ## Precautions
 
 - **modify Cloudflare->SSL/TLS->Overview->Full**
@@ -89,6 +97,14 @@
 - **The problem that the low-version script cannot start when upgrading to a high-version script, [Please click this link to view the solution](https://github.com/sh1375/v2ray-agent/blob/master/documents/how_to_use.md#4%E4%BD%8E%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E9%AB%98%E7%89%88%E6%9C%AC%E5%90%8E%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E6%A0%B8%E5%BF%83)**
 
 ## [Script usage guide](https://github.com/sh1375/v2ray-agent/blob/master/documents/how_to_use.md)、[Script directory](https://github.com/sh1375/v2ray-agent/blob/master/documents/how_to_use.md#5脚本目录)
+
+## donate
+
+[You can use my AFF to purchase VPS donation-blog](https://www.v2ray-agent.com/%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%88%91%E7%9A%84AFF%E8%B4%AD%E4%B9%B0vps%E6%8D%90%E8%B5%A0)
+
+[You can use my AFF to purchase VPS donation-Github](https://github.com/sh1375/v2ray-agent/blob/master/documents/donation_aff.md)
+
+[Support donating to me through virtual coins](https://github.com/sh1375/v2ray-agent/blob/master/documents/donation.md)
 
 ## Installation script
 
