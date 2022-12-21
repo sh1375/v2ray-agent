@@ -337,7 +337,7 @@ readInstallProtocolType() {
 checkBTPanel() {
 	if pgrep -f "BT-Panel"; then
 		nginxConfigPath=/www/server/panel/vhost/nginx/
-		#		BTPanelStatus=true
+		BTPanelStatus=true
 	fi
 }
 # 读取当前alpn的顺序
@@ -754,7 +754,7 @@ installTools() {
 
 	if [[ ! -d "$HOME/.acme.sh" ]] || [[ -d "$HOME/.acme.sh" && -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
 		echoContent green " ---> 安装acme.sh"
-		curl -s https://get.acme.sh | sh >/etc/v2ray-agent/tls/acme.log 2>&1
+		curl -s https://get.acme.sh | sh -s >/etc/v2ray-agent/tls/acme.log 2>&1
 
 		if [[ ! -d "$HOME/.acme.sh" ]] || [[ -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
 			echoContent red "  acme安装失败--->"
