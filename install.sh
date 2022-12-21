@@ -4012,11 +4012,11 @@ handleFirewall() {
 # 安装BBR
 bbrInstall() {
 	echoContent red "\n=============================================================="
-	echoContent green "BBR、DD脚本用的[ylx2016]的成熟作品，地址[https://github.com/ylx2016/Linux-NetSpeed]，请熟知"
-	echoContent yellow "1.安装脚本【推荐原版BBR+FQ】"
-	echoContent yellow "2.回退主目录"
+	echoContent green "BBR、DD For script Installation script [recommended original BBR+FQ][ylx2016]Mature works，address[https://github.com/ylx2016/Linux-NetSpeed]，Please be familiar with"
+	echoContent yellow "1.Installation script [recommended original BBR+FQ]"
+	echoContent yellow "2.Fall back to the home directory"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" installBBRStatus
+	read -r -p "Please select:" installBBRStatus
 	if [[ "${installBBRStatus}" == "1" ]]; then
 		wget -N --no-check-certificate "https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
 	else
@@ -4027,31 +4027,31 @@ bbrInstall() {
 # 查看、检查日志
 checkLog() {
 	if [[ -z ${configPath} ]]; then
-		echoContent red " ---> 没有检测到安装目录，请执行脚本安装内容"
+		echoContent red " ---> The installation directory is not detected, please execute the script to install the content"
 	fi
 	local logStatus=false
 	if grep -q "access" ${configPath}00_log.json; then
 		logStatus=true
 	fi
 
-	echoContent skyBlue "\n功能 $1/${totalProgress} : 查看日志"
+	echoContent skyBlue "\nfunction $1/${totalProgress} : View log"
 	echoContent red "\n=============================================================="
-	echoContent yellow "# 建议仅调试时打开access日志\n"
+	echoContent yellow "# It is recommended to turn on only when debugging access log\n"
 
 	if [[ "${logStatus}" == "false" ]]; then
-		echoContent yellow "1.打开access日志"
+		echoContent yellow "1.open access log"
 	else
-		echoContent yellow "1.关闭access日志"
+		echoContent yellow "1.close access log"
 	fi
 
-	echoContent yellow "2.监听access日志"
-	echoContent yellow "3.监听error日志"
-	echoContent yellow "4.查看证书定时任务日志"
-	echoContent yellow "5.查看证书安装日志"
-	echoContent yellow "6.清空日志"
+	echoContent yellow "2.monitor access log"
+	echoContent yellow "3.monitor error log"
+	echoContent yellow "4.View certificate scheduled tasks log"
+	echoContent yellow "5.View certificate installation log"
+	echoContent yellow "6.Empty log"
 	echoContent red "=============================================================="
 
-	read -r -p "请选择:" selectAccessLogType
+	read -r -p "Please select:" selectAccessLogType
 	local configPathLog=${configPath//conf\//}
 
 	case ${selectAccessLogType} in
@@ -5029,15 +5029,15 @@ EOF
 
 # v2ray-core个性化安装
 customV2RayInstall() {
-	echoContent skyBlue "\n========================个性化安装============================"
-	echoContent yellow "VLESS前置，默认安装0，如果只需要安装0，则只选择0即可"
+	echoContent skyBlue "\n========================Personalized installation============================"
+	echoContent yellow "VLESS Front, install 0 by default, if you only need to install 0, then only select 0"
 	echoContent yellow "0.VLESS+TLS/XTLS+TCP"
 	echoContent yellow "1.VLESS+TLS+WS[CDN]"
 	echoContent yellow "2.Trojan+TLS+gRPC[CDN]"
 	echoContent yellow "3.VMess+TLS+WS[CDN]"
 	echoContent yellow "4.Trojan"
 	echoContent yellow "5.VLESS+TLS+gRPC[CDN]"
-	read -r -p "请选择[多选]，[例如:123]:" selectCustomInstallType
+	read -r -p "Please select [multiple choice], [for example:123]:" selectCustomInstallType
 	echoContent skyBlue "--------------------------------------------------------------"
 	if [[ -z ${selectCustomInstallType} ]]; then
 		selectCustomInstallType=0
@@ -5071,25 +5071,25 @@ customV2RayInstall() {
 		checkGFWStatue 15
 		showAccounts 16
 	else
-		echoContent red " ---> 输入不合法"
+		echoContent red " ---> Input is not legal"
 		customV2RayInstall
 	fi
 }
 
 # Xray-core个性化安装
 customXrayInstall() {
-	echoContent skyBlue "\n========================个性化安装============================"
-	echoContent yellow "VLESS前置，默认安装0，如果只需要安装0，则只选择0即可"
+	echoContent skyBlue "\n========================Personalized installation============================"
+	echoContent yellow "VLESS Front, install 0 by default, if you only need to install 0, then only select 0"
 	echoContent yellow "0.VLESS+TLS/XTLS+TCP"
 	echoContent yellow "1.VLESS+TLS+WS[CDN]"
 	echoContent yellow "2.Trojan+TLS+gRPC[CDN]"
 	echoContent yellow "3.VMess+TLS+WS[CDN]"
 	echoContent yellow "4.Trojan"
 	echoContent yellow "5.VLESS+TLS+gRPC[CDN]"
-	read -r -p "请选择[多选]，[例如:123]:" selectCustomInstallType
+	read -r -p "Please select [multiple choice], [for example:123]:" selectCustomInstallType
 	echoContent skyBlue "--------------------------------------------------------------"
 	if [[ -z ${selectCustomInstallType} ]]; then
-		echoContent red " ---> 不可为空"
+		echoContent red " ---> Not empty"
 		customXrayInstall
 	elif [[ "${selectCustomInstallType}" =~ ^[0-5]+$ ]]; then
 		cleanUp v2rayClean
@@ -5132,12 +5132,12 @@ customXrayInstall() {
 
 # 选择核心安装---v2ray-core、xray-core
 selectCoreInstall() {
-	echoContent skyBlue "\n功能 1/${totalProgress} : 选择核心安装"
+	echoContent skyBlue "\nfunction 1/${totalProgress} : Select core installation"
 	echoContent red "\n=============================================================="
 	echoContent yellow "1.Xray-core"
 	echoContent yellow "2.v2ray-core"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" selectCoreType
+	read -r -p "Please select:" selectCoreType
 	case ${selectCoreType} in
 	1)
 		if [[ "${selectInstallType}" == "2" ]]; then
@@ -5242,7 +5242,7 @@ xrayCoreInstall() {
 # Hysteria安装
 hysteriaCoreInstall() {
 	if [[ -z "${coreInstallType}" ]]; then
-		echoContent red "\n ---> 由于环境依赖，如安装hysteria，请先安装Xray/V2ray"
+		echoContent red "\n ---> Due to environmental dependencies, if you install hysteria, please install Xray/V2ray first"
 		menu
 		exit 0
 	fi
@@ -5271,7 +5271,7 @@ unInstallHysteriaCore() {
 coreVersionManageMenu() {
 
 	if [[ -z "${coreInstallType}" ]]; then
-		echoContent red "\n ---> 没有检测到安装目录，请执行脚本安装内容"
+		echoContent red "\n ---> The installation directory is not detected, please execute the script to install the content"
 		menu
 		exit 0
 	fi
@@ -5295,7 +5295,7 @@ cronRenewTLS() {
 }
 # 账号管理
 manageAccount() {
-	echoContent skyBlue "\n功能 1/${totalProgress} : 账号管理"
+	echoContent skyBlue "\nfunction 1/${totalProgress} : Account management"
 	echoContent red "\n=============================================================="
 	echoContent yellow "# Every time you delete or add an account, you need to re-view the subscription to generate a subscription"
 	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria\n"
@@ -5345,7 +5345,7 @@ subscribe() {
 				fi
 
 				echoContent yellow "url:https://${currentDomain}/s/${email}\n"
-				echoContent yellow "在线二维码:https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://${currentDomain}/s/${email}\n"
+				echoContent yellow "Online QR code:https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://${currentDomain}/s/${email}\n"
 				echo "https://${currentDomain}/s/${email}" | qrencode -s 10 -m 1 -t UTF8
 				echoContent skyBlue "--------------------------------------------------------------"
 			done
@@ -5364,7 +5364,7 @@ switchAlpn() {
 	fi
 
 	echoContent red "\n=============================================================="
-	echoContent green "当前alpn首位为:${currentAlpn}"
+	echoContent green "The current alpn number one is:${currentAlpn}"
 	echoContent yellow "  1.When http/1.1 is enabled, trojan is available, and some gRPC clients are available [The client supports manual selection of the availability of alpn]"
 	echoContent yellow "  2.When h2 starts, gRPC is available, and some trojan clients are available [the client supports manual selection of the availability of alpn]"
 	echoContent yellow "  3.If the client does not support manual replacement of alpn, it is recommended to use this function to change the order of alpn on the server side to use the corresponding protocol"
@@ -5380,7 +5380,7 @@ switchAlpn() {
 
 	echoContent red "=============================================================="
 
-	read -r -p "请选择:" selectSwitchAlpnType
+	read -r -p "Please select:" selectSwitchAlpnType
 	if [[ "${selectSwitchAlpnType}" == "1" && "${currentAlpn}" == "http/1.1" ]]; then
 
 		local frontingTypeJSON
@@ -5392,7 +5392,7 @@ switchAlpn() {
 		frontingTypeJSON=$(jq -r ".inbounds[0].streamSettings.xtlsSettings.alpn =[\"http/1.1\",\"h2\"]" ${configPath}${frontingType}.json)
 		echo "${frontingTypeJSON}" | jq . >${configPath}${frontingType}.json
 	else
-		echoContent red " ---> 选择错误"
+		echoContent red " ---> Wrong choice"
 		exit 0
 	fi
 	reloadCore
@@ -5401,7 +5401,7 @@ switchAlpn() {
 # hysteria管理
 manageHysteria() {
 
-	echoContent skyBlue "\n进度  1/1 : Hysteria管理"
+	echoContent skyBlue "\nprogress  1/1 : Hysteria management"
 	echoContent red "\n=============================================================="
 	local hysteriaStatus=
 	if [[ -n "${hysteriaConfigPath}" ]]; then
@@ -5415,7 +5415,7 @@ manageHysteria() {
 	fi
 
 	echoContent red "=============================================================="
-	read -r -p "请选择:" installHysteriaStatus
+	read -r -p "Please select:" installHysteriaStatus
 	if [[ "${installHysteriaStatus}" == "1" ]]; then
 		hysteriaCoreInstall
 	elif [[ "${installHysteriaStatus}" == "2" && "${hysteriaStatus}" == "true" ]]; then
