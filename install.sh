@@ -4895,7 +4895,7 @@ removeVMessWSTLSUnblockStreamingMedia() {
 	echoContent green " ---> 卸载成功"
 }
 
-# 重启核心
+# Restart the core
 reloadCore() {
 	if [[ "${coreInstallType}" == "1" ]]; then
 		handleXray stop
@@ -5130,7 +5130,7 @@ customXrayInstall() {
 	fi
 }
 
-# 选择核心安装---v2ray-core、xray-core
+# Select core installation---v2ray-core、xray-core
 selectCoreInstall() {
 	echoContent skyBlue "\nfunction 1/${totalProgress} : Select core installation"
 	echoContent red "\n=============================================================="
@@ -5157,19 +5157,19 @@ selectCoreInstall() {
 	3)
 		v2rayCoreVersion=v4.32.1
 		if [[ "${selectInstallType}" == "2" ]]; then
-			customV2RayInstall
+			customXrayInstall
 		else
-			v2rayCoreInstall
+			xrayCoreInstall
 		fi
 		;;
 	*)
-		echoContent red ' ---> 选择错误，重新选择'
+		echoContent red ' ---> Wrong selection, reselect'
 		selectCoreInstall
 		;;
 	esac
 }
 
-# v2ray-core 安装
+# v2ray-core install
 v2rayCoreInstall() {
 	cleanUp xrayClean
 	selectCustomInstallType=
@@ -5204,13 +5204,13 @@ v2rayCoreInstall() {
 	showAccounts 13
 }
 
-# xray-core 安装
+# xray-core install
 xrayCoreInstall() {
 	cleanUp v2rayClean
 	selectCustomInstallType=
 	totalProgress=13
 	installTools 2
-	# 申请tls
+	# apply tls
 	initTLSNginxConfig 3
 
 	handleXray stop
@@ -5220,7 +5220,7 @@ xrayCoreInstall() {
 	installTLS 4
 	handleNginx stop
 	randomPathFunction 5
-	# 安装Xray
+	# installXray
 	# handleV2Ray stop
 	installXray 6
 	installXrayService 7
@@ -5235,7 +5235,7 @@ xrayCoreInstall() {
 	handleXray start
 
 	handleNginx start
-	# 生成账号
+	# Generate account
 	checkGFWStatue 12
 	showAccounts 13
 }
@@ -5282,7 +5282,7 @@ coreVersionManageMenu() {
 		v2rayVersionManageMenu 1
 
 	elif [[ "${coreInstallType}" == "3" ]]; then
-		v2rayCoreVersion=v4.32.1
+		v2rayCoreVersion=v4.34.0
 		v2rayVersionManageMenu 1
 	fi
 }
