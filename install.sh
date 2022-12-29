@@ -5437,11 +5437,6 @@ menu() {
 	echoContent green "Description:Eight-in-one coexistence script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
-	echoContent red "                        Promotion area                      "
-	echoContent green "AFF donate：https://github.com/sh1375/v2ray-agent/blob/master/documents/donation_aff.md\n"
-	echoContent green "Virtual currency donation：0xB08b731653515b083deE362fefFc45d5eb96c35d\n"
-	echoContent green "Promotion can be contacted TG：https://t.me/"
-	echoContent red "=============================================================="
 	if [[ -n "${coreInstallType}" ]]; then
 		echoContent yellow "1.Reinstall"
 	else
