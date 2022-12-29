@@ -1808,12 +1808,12 @@ updateV2Ray() {
 			version=${v2rayCoreVersion}
 		fi
 		if [[ -n "$1" ]]; then
-			read -r -p "回退版本为${version}，是否继续？[y/n]:" rollbackV2RayStatus
+			read -r -p "The fallback version is ${version}，Whether to continue？[y/n]:" rollbackV2RayStatus
 			if [[ "${rollbackV2RayStatus}" == "y" ]]; then
 				if [[ "${coreInstallType}" == "2" || "${coreInstallType}" == "3" ]]; then
-					echoContent green " ---> 当前v2ray-core版本:$(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)"
+					echoContent green " ---> Current v2ray-core version:$(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)"
 				elif [[ "${coreInstallType}" == "1" ]]; then
-					echoContent green " ---> 当前Xray-core版本:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+					echoContent green " ---> Current Xray-core version:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
 				fi
 
 				handleV2Ray stop
@@ -1821,17 +1821,17 @@ updateV2Ray() {
 				rm -f /etc/v2ray-agent/v2ray/v2ctl
 				updateV2Ray "${version}"
 			else
-				echoContent green " ---> 放弃回退版本"
+				echoContent green " ---> Abandon the fallback version"
 			fi
 		elif [[ "${version}" == "v$(/etc/v2ray-agent/v2ray/v2ray --version | awk '{print $2}' | head -1)" ]]; then
-			read -r -p "当前版本与最新版相同，是否重新安装？[y/n]:" reInstallV2RayStatus
+			read -r -p "The current version is the same as the latest version, whether to reinstall？[y/n]:" reInstallV2RayStatus
 			if [[ "${reInstallV2RayStatus}" == "y" ]]; then
 				handleV2Ray stop
 				rm -f /etc/v2ray-agent/v2ray/v2ray
 				rm -f /etc/v2ray-agent/v2ray/v2ctl
 				updateV2Ray
 			else
-				echoContent green " ---> 放弃重新安装"
+				echoContent green " ---> Abandon reinstallation"
 			fi
 		else
 			read -r -p "最新版本为:${version}，是否更新？[y/n]:" installV2RayStatus
@@ -1840,7 +1840,7 @@ updateV2Ray() {
 				rm -f /etc/v2ray-agent/v2ray/v2ctl
 				updateV2Ray
 			else
-				echoContent green " ---> 放弃更新"
+				echoContent green " ---> Abandon the update"
 			fi
 
 		fi
@@ -1871,7 +1871,7 @@ updateXray() {
 		handleXray stop
 		handleXray start
 	else
-		echoContent green " ---> 当前Xray-core版本:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+		echoContent green " ---> Current Xray-core version:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
 
 		if [[ -n "$1" ]]; then
 			version=$1
@@ -1880,25 +1880,25 @@ updateXray() {
 		fi
 
 		if [[ -n "$1" ]]; then
-			read -r -p "回退版本为${version}，是否继续？[y/n]:" rollbackXrayStatus
+			read -r -p "The fallback version is ${version}，Whether to continue？[y/n]:" rollbackXrayStatus
 			if [[ "${rollbackXrayStatus}" == "y" ]]; then
-				echoContent green " ---> 当前Xray-core版本:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
+				echoContent green " ---> Current Xray-core version:$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)"
 
 				handleXray stop
 				rm -f /etc/v2ray-agent/xray/xray
 				updateXray "${version}"
 			else
-				echoContent green " ---> 放弃回退版本"
+				echoContent green " ---> Abandon the fallback version"
 			fi
 		elif [[ "${version}" == "v$(/etc/v2ray-agent/xray/xray --version | awk '{print $2}' | head -1)" ]]; then
-			read -r -p "当前版本与最新版相同，是否重新安装？[y/n]:" reInstallXrayStatus
+			read -r -p "The current version is the same as the latest version, whether to reinstall？[y/n]:" reInstallXrayStatus
 			if [[ "${reInstallXrayStatus}" == "y" ]]; then
 				handleXray stop
 				rm -f /etc/v2ray-agent/xray/xray
 				rm -f /etc/v2ray-agent/xray/xray
 				updateXray
 			else
-				echoContent green " ---> 放弃重新安装"
+				echoContent green " ---> Abandon reinstallation"
 			fi
 		else
 			read -r -p "最新版本为:${version}，是否更新？[y/n]:" installXrayStatus
