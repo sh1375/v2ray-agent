@@ -1721,23 +1721,23 @@ v2rayVersionManageMenu() {
 	fi
 }
 
-# xray版本管理
+# xray Version management
 xrayVersionManageMenu() {
-	echoContent skyBlue "\n进度  $1/${totalProgress} : Xray版本管理"
+	echoContent skyBlue "\nprogress  $1/${totalProgress} : Xray Version management"
 	if [[ ! -d "/etc/v2ray-agent/xray/" ]]; then
-		echoContent red " ---> 没有检测到安装目录，请执行脚本安装内容"
+		echoContent red " ---> The installation directory is not detected, please execute the script to install the content"
 		menu
 		exit 0
 	fi
 	echoContent red "\n=============================================================="
-	echoContent yellow "1.升级Xray-core"
-	echoContent yellow "2.升级Xray-core 预览版"
-	echoContent yellow "3.回退Xray-core"
-	echoContent yellow "4.关闭Xray-core"
-	echoContent yellow "5.打开Xray-core"
-	echoContent yellow "6.重启Xray-core"
+	echoContent yellow "1.Upgrade Xray-core"
+	echoContent yellow "2.Upgrade Xray-core Preview version"
+	echoContent yellow "3.Fall back Xray-core"
+	echoContent yellow "4.Close Xray-core"
+	echoContent yellow "5.Open Xray-core"
+	echoContent yellow "6.Restart Xray-core"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" selectXrayType
+	read -r -p "Please select:" selectXrayType
 	if [[ "${selectXrayType}" == "1" ]]; then
 		updateXray
 	elif [[ "${selectXrayType}" == "2" ]]; then
@@ -1746,18 +1746,18 @@ xrayVersionManageMenu() {
 		updateXray
 
 	elif [[ "${selectXrayType}" == "3" ]]; then
-		echoContent yellow "\n1.只可以回退最近的五个版本"
-		echoContent yellow "2.不保证回退后一定可以正常使用"
-		echoContent yellow "3.如果回退的版本不支持当前的config，则会无法连接，谨慎操作"
+		echoContent yellow "\n1.Only the most recent five versions can be rolled back"
+		echoContent yellow "2.There is no guarantee that it will be able to be used normally after the fallback"
+		echoContent yellow "3.If the fallback version does not support the current config，Will not be able to connect，Operate with caution"
 		echoContent skyBlue "------------------------Version-------------------------------"
 		curl -s https://api.github.com/repos/XTLS/Xray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}'
 		echoContent skyBlue "--------------------------------------------------------------"
-		read -r -p "请输入要回退的版本:" selectXrayVersionType
+		read -r -p "Please enter the version you want to fall back:" selectXrayVersionType
 		version=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | jq -r '.[]|select (.prerelease==false)|.tag_name' | head -5 | awk '{print ""NR""":"$0}' | grep "${selectXrayVersionType}:" | awk -F "[:]" '{print $2}')
 		if [[ -n "${version}" ]]; then
 			updateXray "${version}"
 		else
-			echoContent red "\n ---> 输入有误，请重新输入"
+			echoContent red "\n ---> Incorrect input，Please re-enter"
 			xrayVersionManageMenu 1
 		fi
 	elif [[ "${selectXrayType}" == "4" ]]; then
@@ -1769,7 +1769,7 @@ xrayVersionManageMenu() {
 	fi
 
 }
-# 更新V2Ray
+# Update V2Ray
 updateV2Ray() {
 	readInstallType
 	if [[ -z "${coreInstallType}" ]]; then
