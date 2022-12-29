@@ -856,22 +856,22 @@ installWarp() {
 # Initialize Nginx to apply for certificate configuration
 initTLSNginxConfig() {
 	handleNginx stop
-	echoContent skyBlue "\n进度  $1/${totalProgress} : 初始化Nginx申请证书配置"
+	echoContent skyBlue "\n进度  $1/${totalProgress} : Initialize Nginx to apply for certificate configuration"
 	if [[ -n "${currentHost}" ]]; then
 		echo
 		read -r -p "Read the last installation record, whether to use the domain name at the time of the last installation ？[y/n]:" historyDomainStatus
 		if [[ "${historyDomainStatus}" == "y" ]]; then
 			domain=${currentHost}
-			echoContent yellow "\n ---> 域名: ${domain}"
+			echoContent yellow "\n ---> domain name: ${domain}"
 		else
 			echo
 			echoContent yellow "Please enter the domain name you want to configure example: www.v2ray-agent.com --->"
-			read -r -p "域名:" domain
+			read -r -p "domain name:" domain
 		fi
 	else
 		echo
 		echoContent yellow "Please enter the domain name you want to configure example: www.v2ray-agent.com --->"
-		read -r -p "域名:" domain
+		read -r -p "domain name:" domain
 	fi
 
 	if [[ -z ${domain} ]]; then
@@ -4146,12 +4146,12 @@ ipv6Routing() {
 	fi
 
 	checkIPv6
-	echoContent skyBlue "\n功能 1/${totalProgress} : IPv6分流"
+	echoContent skyBlue "\nfunction 1/${totalProgress} : IPv6 Shunt"
 	echoContent red "\n=============================================================="
-	echoContent yellow "1.添加域名"
-	echoContent yellow "2.卸载IPv6分流"
+	echoContent yellow "1.Add domain name"
+	echoContent yellow "2.Uninstall IPv6 shunt"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" ipv6Status
+	read -r -p "Please select:" ipv6Status
 	if [[ "${ipv6Status}" == "1" ]]; then
 		echoContent red "=============================================================="
 		echoContent yellow "# 注意事项\n"
@@ -4197,7 +4197,7 @@ EOF
 
 		echo "${outbounds}" | jq . >${configPath}10_ipv4_outbounds.json
 
-		echoContent green " ---> 添加成功"
+		echoContent green " ---> Added successfully"
 
 	elif [[ "${ipv6Status}" == "2" ]]; then
 
@@ -4205,9 +4205,9 @@ EOF
 
 		unInstallOutbounds IPv6-out
 
-		echoContent green " ---> IPv6分流卸载成功"
+		echoContent green " ---> IPv6 Shunt and uninstall successfully"
 	else
-		echoContent red " ---> 选择错误"
+		echoContent red " ---> Wrong choice"
 		exit 0
 	fi
 
@@ -4217,7 +4217,7 @@ EOF
 # bt下载管理
 btTools() {
 	if [[ -z "${configPath}" ]]; then
-		echoContent red " ---> 未安装，请使用脚本安装"
+		echoContent red " ---> Not installed, please use the script to install"
 		menu
 		exit 0
 	fi
@@ -4234,7 +4234,7 @@ btTools() {
 	echoContent yellow "1.disable"
 	echoContent yellow "2.open"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" btStatus
+	read -r -p "Please select:" btStatus
 	if [[ "${btStatus}" == "1" ]]; then
 
 		if [[ -f "${configPath}09_routing.json" ]]; then
@@ -4650,10 +4650,10 @@ setVMessWSTLSUnblockStreamingMediaOutbounds() {
 EOF
 		fi
 		reloadCore
-		echoContent green " ---> 添加出站解锁成功"
+		echoContent green " ---> Added outbound unlock successfully"
 		exit 0
 	fi
-	echoContent red " ---> 地址不可为空"
+	echoContent red " ---> The address cannot be empty"
 	setVMessWSTLSUnblockStreamingMediaOutbounds
 }
 
