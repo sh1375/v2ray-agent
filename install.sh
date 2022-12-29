@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# 检测区
+# Detection area
 # -------------------------------------------------------------
-# 检查系统
+# Check the system
 export LANG=en_US.UTF-8
 
 echoContent() {
@@ -68,7 +68,7 @@ checkSystem() {
 	fi
 
 	if [[ -z ${release} ]]; then
-		echoContent red "\n本脚本不支持此系统，请将下方日志反馈给开发者\n"
+		echoContent red "\nThis script does not support this system, please feedback the following log to the developer\n"
 		echoContent yellow "$(cat /etc/issue)"
 		echoContent yellow "$(cat /proc/version)"
 		exit 0
@@ -1413,17 +1413,17 @@ randomPathFunction() {
 }
 # Nginx伪装博客
 nginxBlog() {
-	echoContent skyBlue "\n进度 $1/${totalProgress} : 添加伪装站点"
+	echoContent skyBlue "\n进度 $1/${totalProgress} : Add a fake site"
 	if [[ -d "/usr/share/nginx/html" && -f "/usr/share/nginx/html/check" ]]; then
 		echo
-		read -r -p "检测到安装伪装站点，是否需要重新安装[y/n]:" nginxBlogInstallStatus
+		read -r -p "The installation of a disguised site is detected, does it need to be reinstalled?[y/n]:" nginxBlogInstallStatus
 		if [[ "${nginxBlogInstallStatus}" == "y" ]]; then
 			rm -rf /usr/share/nginx/html
 			randomNum=$((RANDOM % 6 + 1))
 			wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 			unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 			rm -f /usr/share/nginx/html${randomNum}.zip*
-			echoContent green " ---> 添加伪装站点成功"
+			echoContent green " ---> Successfully added a fake site"
 		fi
 	else
 		randomNum=$((RANDOM % 6 + 1))
@@ -1431,7 +1431,7 @@ nginxBlog() {
 		wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 		unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 		rm -f /usr/share/nginx/html${randomNum}.zip*
-		echoContent green " ---> 添加伪装站点成功"
+		echoContent green " ---> Successfully added a fake site"
 	fi
 
 }
@@ -1468,8 +1468,8 @@ handleNginx() {
 		sleep 0.5
 
 		if [[ -z $(pgrep -f nginx) ]]; then
-			echoContent red " ---> Nginx启动失败"
-			echoContent red " ---> 请手动尝试安装nginx后，再次执行脚本"
+			echoContent red " ---> Nginx Startup failed"
+			echoContent red " ---> Please try to install manually nginx After that, execute the script again"
 
 			if grep -q "journalctl -xe" </etc/v2ray-agent/nginx_error.log; then
 				updateSELinuxHTTPPortT
@@ -1477,7 +1477,7 @@ handleNginx() {
 
 			# exit 0
 		else
-			echoContent green " ---> Nginx启动成功"
+			echoContent green " ---> Nginx Successful startup"
 		fi
 
 	elif [[ -n $(pgrep -f "nginx") ]] && [[ "$1" == "stop" ]]; then
@@ -1486,20 +1486,20 @@ handleNginx() {
 		if [[ -n $(pgrep -f "nginx") ]]; then
 			pgrep -f "nginx" | xargs kill -9
 		fi
-		echoContent green " ---> Nginx关闭成功"
+		echoContent green " ---> Nginx Closed successfully"
 	fi
 }
 
 # 定时任务更新tls证书
 installCronTLS() {
-	echoContent skyBlue "\n进度 $1/${totalProgress} : 添加定时维护证书"
+	echoContent skyBlue "\n进度 $1/${totalProgress} : Add scheduled maintenance certificate"
 	crontab -l >/etc/v2ray-agent/backup_crontab.cron
 	local historyCrontab
 	historyCrontab=$(sed '/v2ray-agent/d;/acme.sh/d' /etc/v2ray-agent/backup_crontab.cron)
 	echo "${historyCrontab}" >/etc/v2ray-agent/backup_crontab.cron
 	echo "30 1 * * * /bin/bash /etc/v2ray-agent/install.sh RenewTLS >> /etc/v2ray-agent/crontab_tls.log 2>&1" >>/etc/v2ray-agent/backup_crontab.cron
 	crontab /etc/v2ray-agent/backup_crontab.cron
-	echoContent green "\n ---> 添加定时维护证书成功"
+	echoContent green "\n ---> Successfully added the scheduled maintenance certificate"
 }
 
 # 更新证书
@@ -2699,11 +2699,11 @@ initXrayConfig() {
 	local uuid=
 	local addClientsStatus=
 	if [[ -n "${currentUUID}" ]]; then
-		read -r -p "读取到上次安装记录，是否使用上次安装时的UUID ？[y/n]:" historyUUIDStatus
+		read -r -p "Read the last installation record, whether to use the last installation UUID ？[y/n]:" historyUUIDStatus
 		if [[ "${historyUUIDStatus}" == "y" ]]; then
 			addClientsStatus=true
 			uuid=${currentUUID}
-			echoContent green "\n ---> 使用成功"
+			echoContent green "\n ---> Successful use"
 		fi
 	fi
 
@@ -2721,7 +2721,7 @@ initXrayConfig() {
 
 	if [[ -z "${uuid}" ]]; then
 		addClientsStatus=
-		echoContent red "\n ---> uuid读取错误，重新生成"
+		echoContent red "\n ---> uuid Read error, regenerate"
 		uuid=$(/etc/v2ray-agent/xray/xray uuid)
 	fi
 
@@ -3492,16 +3492,16 @@ updateNginxBlog() {
 	echoContent yellow "9.404自动跳转baidu"
 	echoContent yellow "10.302重定向网站"
 	echoContent red "=============================================================="
-	read -r -p "请选择:" selectInstallNginxBlogType
+	read -r -p "Please select:" selectInstallNginxBlogType
 
 	if [[ "${selectInstallNginxBlogType}" == "10" ]]; then
 		echoContent red "\n=============================================================="
-		echoContent yellow "重定向的优先级更高，配置302之后如果更改伪装站点，根路由下伪装站点将不起作用"
-		echoContent yellow "如想要伪装站点实现作用需删除302重定向配置\n"
-		echoContent yellow "1.添加"
-		echoContent yellow "2.删除"
+		echoContent yellow "The priority of redirects is higher. If you change the camouflage site after configuring 302, the camouflage site under the root route will not work."
+		echoContent yellow "If you want to disguise the site to achieve the effect, you need to delete the 302 redirect configuration\n"
+		echoContent yellow "1.add"
+		echoContent yellow "2.delete"
 		echoContent red "=============================================================="
-		read -r -p "请选择:" redirectStatus
+		read -r -p "Please select:" redirectStatus
 
 		if [[ "${redirectStatus}" == "1" ]]; then
 			backupNginxConfig backup
@@ -3534,9 +3534,9 @@ updateNginxBlog() {
 
 		unzip -o "/usr/share/nginx/html${selectInstallNginxBlogType}.zip" -d /usr/share/nginx/html >/dev/null
 		rm -f "/usr/share/nginx/html${selectInstallNginxBlogType}.zip*"
-		echoContent green " ---> 更换伪站成功"
+		echoContent green " ---> Successful replacement of fake station"
 	else
-		echoContent red " ---> 选择错误，请重新选择"
+		echoContent red " ---> The selection is wrong, please re-select"
 		updateNginxBlog
 	fi
 }
@@ -3625,16 +3625,16 @@ EOF
 
 # 卸载脚本
 unInstall() {
-	read -r -p "是否确认卸载安装内容？[y/n]:" unInstallStatus
+	read -r -p "Whether to confirm the uninstall of the installation content？[y/n]:" unInstallStatus
 	if [[ "${unInstallStatus}" != "y" ]]; then
-		echoContent green " ---> 放弃卸载"
+		echoContent green " ---> Abandon uninstall"
 		menu
 		exit 0
 	fi
 
 	handleNginx stop
 	if [[ -z $(pgrep -f "nginx") ]]; then
-		echoContent green " ---> 停止Nginx成功"
+		echoContent green " ---> Stop Nginx success"
 	fi
 
 	if [[ "${coreInstallType}" == "1" ]]; then
@@ -3666,7 +3666,7 @@ unInstall() {
 	if [[ -d "/etc/v2ray-agent/tls" ]] && [[ -n $(find /etc/v2ray-agent/tls/ -name "*.key") ]] && [[ -n $(find /etc/v2ray-agent/tls/ -name "*.crt") ]]; then
 		mv /etc/v2ray-agent/tls /tmp/v2ray-agent-tls
 		if [[ -n $(find /tmp/v2ray-agent-tls -name '*.key') ]]; then
-			echoContent yellow " ---> 备份证书成功，请注意留存。[/tmp/v2ray-agent-tls]"
+			echoContent yellow " ---> The backup certificate was successful, please pay attention to keep it.[/tmp/v2ray-agent-tls]"
 		fi
 	fi
 
@@ -3675,12 +3675,12 @@ unInstall() {
 
 	if [[ -d "/usr/share/nginx/html" && -f "/usr/share/nginx/html/check" ]]; then
 		rm -rf /usr/share/nginx/html
-		echoContent green " ---> 删除伪装网站完成"
+		echoContent green " ---> Delete the fake website is complete"
 	fi
 
-	rm -rf /usr/bin/vasma
-	rm -rf /usr/sbin/vasma
-	echoContent green " ---> 卸载快捷方式完成"
+	rm -rf /usr/bin/rose
+	rm -rf /usr/sbin/rose
+	echoContent green " ---> The uninstall shortcut is complete"
 	echoContent green " ---> 卸载v2ray-agent脚本完成"
 }
 
@@ -3697,7 +3697,7 @@ updateV2RayCDN() {
 		echoContent yellow "1.CNAME www.digitalocean.com"
 		echoContent yellow "2.CNAME www.cloudflare.com"
 		echoContent yellow "3.CNAME hostmonit.com"
-		echoContent yellow "4.手动输入"
+		echoContent yellow "4.Manual input"
 		echoContent red "=============================================================="
 		read -r -p "请选择:" selectCDNType
 		case ${selectCDNType} in
@@ -3735,16 +3735,16 @@ updateV2RayCDN() {
 manageUser() {
 	echoContent skyBlue "\n进度 $1/${totalProgress} : 多用户管理"
 	echoContent skyBlue "-----------------------------------------------------"
-	echoContent yellow "1.添加用户"
-	echoContent yellow "2.删除用户"
+	echoContent yellow "1.Add user"
+	echoContent yellow "2.Delete user"
 	echoContent skyBlue "-----------------------------------------------------"
-	read -r -p "请选择:" manageUserType
+	read -r -p "Please select:" manageUserType
 	if [[ "${manageUserType}" == "1" ]]; then
 		addUser
 	elif [[ "${manageUserType}" == "2" ]]; then
 		removeUser
 	else
-		echoContent red " ---> 选择错误"
+		echoContent red " ---> Wrong choice"
 	fi
 }
 
@@ -3753,10 +3753,10 @@ customUUID() {
 	#	read -r -p "是否自定义UUID ？[y/n]:" customUUIDStatus
 	#	echo
 	#	if [[ "${customUUIDStatus}" == "y" ]]; then
-	read -r -p "请输入合法的UUID，[回车]随机UUID:" currentCustomUUID
+	read -r -p "Please enter legal UUID，[Enter] Random UUID:" currentCustomUUID
 	echo
 	if [[ -z "${currentCustomUUID}" ]]; then
-		# echoContent red " ---> UUID不可为空"
+		# echoContent red " ---> UUID Not empty"
 		currentCustomUUID=$(${ctlPath} uuid)
 		echoContent yellow "uuid:${currentCustomUUID}\n"
 
@@ -3767,7 +3767,7 @@ customUUID() {
 			fi
 		done
 		if [[ -f "/tmp/v2ray-agent" && -n $(cat /tmp/v2ray-agent) ]]; then
-			echoContent red " ---> UUID不可重复"
+			echoContent red " ---> UUID Not repeatable"
 			rm /tmp/v2ray-agent
 			exit 0
 		fi
@@ -3780,12 +3780,12 @@ customUserEmail() {
 	#	read -r -p "是否自定义email ？[y/n]:" customEmailStatus
 	#	echo
 	#	if [[ "${customEmailStatus}" == "y" ]]; then
-	read -r -p "请输入合法的email，[回车]随机email:" currentCustomEmail
+	read -r -p "Please enter legal email，[Enter] Random email:" currentCustomEmail
 	echo
 	if [[ -z "${currentCustomEmail}" ]]; then
 		currentCustomEmail="${currentHost}_${currentCustomUUID}"
 		echoContent yellow "email: ${currentCustomEmail}\n"
-		#		echoContent red " ---> email不可为空"
+		#		echoContent red " ---> email Not empty"
 	else
 		jq -r -c '.inbounds[0].settings.clients[].email' ${configPath}${frontingType}.json | while read -r line; do
 			if [[ "${line}" == "${currentCustomEmail}" ]]; then
@@ -3793,7 +3793,7 @@ customUserEmail() {
 			fi
 		done
 		if [[ -f "/tmp/v2ray-agent" && -n $(cat /tmp/v2ray-agent) ]]; then
-			echoContent red " ---> email不可重复"
+			echoContent red " ---> email Not repeatable"
 			rm /tmp/v2ray-agent
 			exit 0
 		fi
@@ -3804,11 +3804,11 @@ customUserEmail() {
 # 添加用户
 addUser() {
 
-	echoContent yellow "添加新用户后，需要重新查看订阅"
-	read -r -p "请输入要添加的用户数量:" userNum
+	echoContent yellow "After adding a new user, you need to review the subscription again"
+	read -r -p "Please enter the number of users you want to add:" userNum
 	echo
 	if [[ -z ${userNum} || ${userNum} -le 0 ]]; then
-		echoContent red " ---> 输入有误，请重新输入"
+		echoContent red " ---> The input is incorrect, please re-enter"
 		exit 0
 	fi
 
@@ -3910,7 +3910,7 @@ addUser() {
 	done
 
 	reloadCore
-	echoContent green " ---> 添加完成"
+	echoContent green " ---> Added complete"
 	manageAccount 1
 }
 
@@ -3984,10 +3984,10 @@ updateV2RayAgent() {
 	local version
 	version=$(grep '当前版本:v' "/etc/v2ray-agent/install.sh" | awk -F "[v]" '{print $2}' | tail -n +2 | head -n 1 | awk -F "[\"]" '{print $1}')
 
-	echoContent green "\n ---> 更新完毕"
-	echoContent yellow " ---> 请手动执行[vasma]打开脚本"
-	echoContent green " ---> 当前版本:${version}\n"
-	echoContent yellow "如更新不成功，请手动执行下面命令\n"
+	echoContent green "\n ---> The update is complete"
+	echoContent yellow " ---> Please execute [rose] manually to open the script"
+	echoContent green " ---> Current version:${version}\n"
+	echoContent yellow "If the update is unsuccessful, please execute the following command manually\n"
 	echoContent skyBlue "wget -P /root -N --no-check-certificate https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh && chmod 700 /root/install.sh && /root/install.sh"
 	echo
 	exit 0
@@ -4103,25 +4103,25 @@ aliasInstall() {
 
 	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <"$HOME/install.sh" -q "作者:sh1375"; then
 		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
-		local vasmaType=
+		local roseType=
 		if [[ -d "/usr/bin/" ]]; then
-			if [[ ! -f "/usr/bin/vasma" ]]; then
-				ln -s /etc/v2ray-agent/install.sh /usr/bin/vasma
-				chmod 700 /usr/bin/vasma
-				vasmaType=true
+			if [[ ! -f "/usr/bin/rose" ]]; then
+				ln -s /etc/v2ray-agent/install.sh /usr/bin/rose
+				chmod 700 /usr/bin/rose
+				roseType=true
 			fi
 
 			rm -rf "$HOME/install.sh"
 		elif [[ -d "/usr/sbin" ]]; then
-			if [[ ! -f "/usr/sbin/vasma" ]]; then
-				ln -s /etc/v2ray-agent/install.sh /usr/sbin/vasma
-				chmod 700 /usr/sbin/vasma
-				vasmaType=true
+			if [[ ! -f "/usr/sbin/rose" ]]; then
+				ln -s /etc/v2ray-agent/install.sh /usr/sbin/rose
+				chmod 700 /usr/sbin/rose
+				roseType=true
 			fi
 			rm -rf "$HOME/install.sh"
 		fi
-		if [[ "${vasmaType}" == "true" ]]; then
-			echoContent green "快捷方式创建成功，可执行[vasma]重新打开脚本"
+		if [[ "${roseType}" == "true" ]]; then
+			echoContent green "The shortcut was created successfully, and the [rose] script can be executed to reopen"
 		fi
 	fi
 }
@@ -4226,13 +4226,13 @@ btTools() {
 	echoContent red "\n=============================================================="
 
 	if [[ -f ${configPath}09_routing.json ]] && grep -q bittorrent <${configPath}09_routing.json; then
-		echoContent yellow "当前状态:已禁用"
+		echoContent yellow "Current status: Disabled"
 	else
-		echoContent yellow "当前状态:未禁用"
+		echoContent yellow "Current status: Not disabled"
 	fi
 
-	echoContent yellow "1.禁用"
-	echoContent yellow "2.打开"
+	echoContent yellow "1.disable"
+	echoContent yellow "2.open"
 	echoContent red "=============================================================="
 	read -r -p "请选择:" btStatus
 	if [[ "${btStatus}" == "1" ]]; then
@@ -4292,7 +4292,7 @@ EOF
 # 域名黑名单
 blacklist() {
 	if [[ -z "${configPath}" ]]; then
-		echoContent red " ---> 未安装，请使用脚本安装"
+		echoContent red " ---> Not installed, please use the script to install"
 		menu
 		exit 0
 	fi
@@ -4340,15 +4340,15 @@ blacklist() {
 EOF
 		fi
 
-		echoContent green " ---> 添加成功"
+		echoContent green " ---> Added successfully"
 
 	elif [[ "${blacklistStatus}" == "2" ]]; then
 
 		unInstallRouting blackhole-out outboundTag
 
-		echoContent green " ---> 域名黑名单删除成功"
+		echoContent green " ---> The domain name blacklist was deleted successfully"
 	else
-		echoContent red " ---> 选择错误"
+		echoContent red " ---> Wrong choice"
 		exit 0
 	fi
 	reloadCore
@@ -4539,10 +4539,10 @@ dokodemoDoorUnblockStreamingMedia() {
 	echoContent yellow "# 注意事项"
 	echoContent yellow "任意门解锁详解，请查看此文章[https://github.com/sh1375/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
-	echoContent yellow "1.添加出站"
-	echoContent yellow "2.添加入站"
-	echoContent yellow "3.卸载"
-	read -r -p "请选择:" selectType
+	echoContent yellow "1.Add outbound"
+	echoContent yellow "2.Add inbound"
+	echoContent yellow "3.Uninstall"
+	read -r -p "Please select:" selectType
 
 	case ${selectType} in
 	1)
@@ -4561,12 +4561,12 @@ dokodemoDoorUnblockStreamingMedia() {
 unblockVMessWSTLSStreamingMedia() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : VMess+WS+TLS 出站解锁流媒体"
 	echoContent red "\n=============================================================="
-	echoContent yellow "# 注意事项"
-	echoContent yellow "适合通过其他服务商提供的VMess解锁服务\n"
+	echoContent yellow "# Precautions"
+	echoContent yellow "Suitable for VMess unlocking services provided by other service providers\n"
 
-	echoContent yellow "1.添加出站"
-	echoContent yellow "2.卸载"
-	read -r -p "请选择:" selectType
+	echoContent yellow "1.Add outbound"
+	echoContent yellow "2.uninstall"
+	read -r -p "Please select:" selectType
 
 	case ${selectType} in
 	1)
@@ -4860,10 +4860,10 @@ EOF
 		fi
 
 		reloadCore
-		echoContent green " ---> 添加落地机入站解锁成功"
+		echoContent green " ---> Add landing machine, inbound unlocking is successful"
 		exit 0
 	fi
-	echoContent red " ---> ip不可为空"
+	echoContent red " ---> ip Not empty"
 }
 
 # 移除任意门解锁Netflix
@@ -4881,7 +4881,7 @@ removeDokodemoDoorUnblockStreamingMedia() {
 	rm -rf ${configPath}01_netflix_inbounds.json
 
 	reloadCore
-	echoContent green " ---> 卸载成功"
+	echoContent green " ---> Uninstall successfully"
 }
 
 # 移除VMess+WS+TLS解锁流媒体
@@ -4892,7 +4892,7 @@ removeVMessWSTLSUnblockStreamingMedia() {
 	unInstallRouting VMess-out outboundTag
 
 	reloadCore
-	echoContent green " ---> 卸载成功"
+	echoContent green " ---> Uninstall successfully"
 }
 
 # Restart the core
@@ -4914,15 +4914,15 @@ reloadCore() {
 # dns解锁Netflix
 dnsUnlockNetflix() {
 	if [[ -z "${configPath}" ]]; then
-		echoContent red " ---> 未安装，请使用脚本安装"
+		echoContent red " ---> Not installed, please use the script to install"
 		menu
 		exit 0
 	fi
 	echoContent skyBlue "\n功能 1/${totalProgress} : DNS解锁流媒体"
 	echoContent red "\n=============================================================="
-	echoContent yellow "1.添加"
-	echoContent yellow "2.卸载"
-	read -r -p "请选择:" selectType
+	echoContent yellow "1.add"
+	echoContent yellow "2.uninstall"
+	read -r -p "Please select:" selectType
 
 	case ${selectType} in
 	1)
@@ -4936,19 +4936,19 @@ dnsUnlockNetflix() {
 
 # 设置dns
 setUnlockDNS() {
-	read -r -p "请输入解锁流媒体DNS:" setDNS
+	read -r -p "Please enter to unlock streaming media DNS:" setDNS
 	if [[ -n ${setDNS} ]]; then
 		echoContent red "=============================================================="
-		echoContent yellow "# 注意事项\n"
-		echoContent yellow "1.规则仅支持预定义域名列表[https://github.com/v2fly/domain-list-community]"
-		echoContent yellow "2.详细文档[https://www.v2fly.org/config/routing.html]"
-		echoContent yellow "3.如内核启动失败请检查域名后重新添加域名"
-		echoContent yellow "4.不允许有特殊字符，注意逗号的格式"
-		echoContent yellow "5.每次添加都是重新添加，不会保留上次域名"
-		echoContent yellow "6.录入示例:netflix,disney,hulu"
-		echoContent yellow "7.默认方案请输入1，默认方案包括以下内容"
+		echoContent yellow "# Precautions\n"
+		echoContent yellow "1.The rule only supports a list of pre-defined domain names[https://github.com/v2fly/domain-list-community]"
+		echoContent yellow "2.Detailed documentation[https://www.v2fly.org/config/routing.html]"
+		echoContent yellow "3.If the kernel fails to start, please check the domain name and add the domain name again"
+		echoContent yellow "4.No special characters are allowed, pay attention to the format of commas"
+		echoContent yellow "5.Every time you add it, you add it again, and the last domain name will not be retained."
+		echoContent yellow "6.Entry example:netflix,disney,hulu"
+		echoContent yellow "7.Please enter 1 for the default plan. The default plan includes the following"
 		echoContent yellow "netflix,bahamut,hulu,hbo,disney,bbc,4chan,fox,abema,dmm,niconico,pixiv,bilibili,viu"
-		read -r -p "请按照上面示例录入域名:" domainList
+		read -r -p "Please follow the example above to enter the domain name:" domainList
 		if [[ "${domainList}" == "1" ]]; then
 			cat <<EOF >${configPath}11_dns.json
             {
@@ -5000,11 +5000,11 @@ EOF
 
 		reloadCore
 
-		echoContent yellow "\n ---> 如还无法观看可以尝试以下两种方案"
-		echoContent yellow " 1.重启vps"
-		echoContent yellow " 2.卸载dns解锁后，修改本地的[/etc/resolv.conf]DNS设置并重启vps\n"
+		echoContent yellow "\n ---> If you can't watch it yet, you can try the following two options"
+		echoContent yellow " 1.restart vps"
+		echoContent yellow " 2.uninstall dns After unlocking, modify the local[/etc/resolv.conf]DNS Set up and restart vps\n"
 	else
-		echoContent red " ---> dns不可为空"
+		echoContent red " ---> dns Not empty"
 	fi
 	exit 0
 }
@@ -5022,7 +5022,7 @@ removeUnlockDNS() {
 EOF
 	reloadCore
 
-	echoContent green " ---> 卸载成功"
+	echoContent green " ---> Uninstall successfully"
 
 	exit 0
 }
@@ -5125,7 +5125,7 @@ customXrayInstall() {
 		checkGFWStatue 15
 		showAccounts 16
 	else
-		echoContent red " ---> 输入不合法"
+		echoContent red " ---> Input is not legal"
 		customXrayInstall
 	fi
 }
@@ -5258,13 +5258,13 @@ hysteriaCoreInstall() {
 unInstallHysteriaCore() {
 
 	if [[ -z "${hysteriaConfigPath}" ]]; then
-		echoContent red "\n ---> 未安装"
+		echoContent red "\n ---> Not installed"
 		exit 0
 	fi
 	handleHysteria stop
 	rm -rf /etc/v2ray-agent/hysteria/*
 	rm -rf /etc/systemd/system/hysteria.service
-	echoContent green " ---> 卸载完成"
+	echoContent green " ---> Uninstall complete"
 }
 
 # 核心管理
@@ -5321,7 +5321,7 @@ manageAccount() {
 # 订阅
 subscribe() {
 	if [[ -n "${configPath}" ]]; then
-		echoContent skyBlue "-------------------------备注---------------------------------"
+		echoContent skyBlue "-------------------------Remarks---------------------------------"
 		echoContent yellow "# The subscription will be regenerated when viewing the subscription"
 		echoContent yellow "# You need to re-view the subscription every time you add or delete an account"
 		rm -rf /etc/v2ray-agent/subscribe/*
@@ -5359,7 +5359,7 @@ subscribe() {
 switchAlpn() {
 	echoContent skyBlue "\n功能 1/${totalProgress} : 切换alpn"
 	if [[ -z ${currentAlpn} ]]; then
-		echoContent red " ---> 无法读取alpn，请检查是否安装"
+		echoContent red " ---> Unable to read alpn, please check if it is installed"
 		exit 0
 	fi
 
@@ -5478,7 +5478,7 @@ menu() {
 	echoContent red "=============================================================="
 	mkdirTools
 	aliasInstall
-	read -r -p "请选择:" selectInstallType
+	read -r -p "Please select:" selectInstallType
 	case ${selectInstallType} in
 	1)
 		selectCoreInstall
