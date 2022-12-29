@@ -511,23 +511,23 @@ showInstallStatus() {
 	if [[ -n "${coreInstallType}" ]]; then
 		if [[ "${coreInstallType}" == 1 ]]; then
 			if [[ -n $(pgrep -f xray/xray) ]]; then
-				echoContent yellow "\n核心: Xray-core[运行中]"
+				echoContent yellow "\nCore: Xray-core[In operation]"
 			else
-				echoContent yellow "\n核心: Xray-core[未运行]"
+				echoContent yellow "\nCore: Xray-core[Not running]"
 			fi
 
 		elif [[ "${coreInstallType}" == 2 || "${coreInstallType}" == 3 ]]; then
 			if [[ -n $(pgrep -f v2ray/v2ray) ]]; then
-				echoContent yellow "\n核心: v2ray-core[运行中]"
+				echoContent yellow "\nCore: v2ray-core[In operation]"
 			else
-				echoContent yellow "\n核心: v2ray-core[未运行]"
+				echoContent yellow "\nCore: v2ray-core[Not running]"
 			fi
 		fi
 		# 读取协议类型
 		readInstallProtocolType
 
 		if [[ -n ${currentInstallProtocolType} ]]; then
-			echoContent yellow "已安装协议: \c"
+			echoContent yellow "Installed protocol: \c"
 		fi
 		if echo ${currentInstallProtocolType} | grep -q 0; then
 			if [[ "${coreInstallType}" == 2 ]]; then
