@@ -957,7 +957,7 @@ nginxBlog() {
 		if [[ "${nginxBlogInstallStatus}" == "y" ]]; then
 			rm -rf /usr/share/nginx/html
 			randomNum=$((RANDOM%6+1))
-			wget -q -P /usr/share/nginx https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
+			wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 			unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 			rm -f /usr/share/nginx/html${randomNum}.zip*
 			echoContent green " ---> Add a camouflage site successfully"
@@ -965,7 +965,7 @@ nginxBlog() {
 	else
 		randomNum=$((RANDOM%6+1))
 		rm -rf /usr/share/nginx/html
-		wget -q -P /usr/share/nginx https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
+		wget -q -P /usr/share/nginx https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${randomNum}.zip >/dev/null
 		unzip -o /usr/share/nginx/html${randomNum}.zip -d /usr/share/nginx/html >/dev/null
 		rm -f /usr/share/nginx/html${randomNum}.zip*
 		echoContent green " ---> Add a camouflage site successfully"
@@ -2335,7 +2335,7 @@ customCDNIP() {
 	echoContent red "\n=============================================================="
 	echoContent yellow "# Cautions"
 	echoContent yellow "\n Tutorial Address:"
-	echoContent skyBlue "https://github.com/mack-a/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
+	echoContent skyBlue "https://github.com/sh1375/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
 	echoContent red "\n If you do not know about Cloudflare optimization, please do not use"
 	echoContent yellow "\n 1.china Mobile:104.16.123.96"
 	echoContent yellow " 2.china Unicom:www.cloudflare.com"
@@ -2686,9 +2686,9 @@ updateNginxBlog() {
 #		rm -rf /usr/share/nginx/html
 		rm -rf /usr/share/nginx/*
 		if wget --help | grep -q show-progress; then
-			wget -c -q --show-progress -P /usr/share/nginx "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
+			wget -c -q --show-progress -P /usr/share/nginx "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
 		else
-			wget -c -P /usr/share/nginx "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
+			wget -c -P /usr/share/nginx "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/fodder/blog/unable/html${selectInstallNginxBlogType}.zip" >/dev/null
 		fi
 
 		unzip -o "/usr/share/nginx/html${selectInstallNginxBlogType}.zip" -d /usr/share/nginx/html >/dev/null
@@ -3097,9 +3097,9 @@ updateV2RayAgent() {
 	echoContent skyBlue "\n progress  $1/${totalProgress} : Update V2RAY-Agent script"
 	rm -rf /etc/v2ray-agent/install.sh
 	if wget --help | grep -q show-progress; then
-		wget -c -q --show-progress -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh"
+		wget -c -q --show-progress -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh"
 	else
-		wget -c -q -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh"
+		wget -c -q -P /etc/v2ray-agent/ -N --no-check-certificate "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh"
 	fi
 
 	sudo chmod 700 /etc/v2ray-agent/install.sh
@@ -3109,7 +3109,7 @@ updateV2RayAgent() {
 	echoContent yellow " ---> Please manually[vasma]Open script"
 	echoContent green " ---> current version:${version}\n"
 	echoContent yellow "If the update is unsuccessful, please manually perform the following command.\n"
-	echoContent skyBlue "wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh" && chmod 700 /root/install.sh && /root/install.sh"
+	echoContent skyBlue "wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/sh1375/v2ray-agent/master/install.sh" && chmod 700 /root/install.sh && /root/install.sh"
 	echo
 	exit 0
 }
@@ -3222,7 +3222,7 @@ EOF
 # Script shortcut
 aliasInstall() {
 
-	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <$HOME/install.sh -q "author：mack-a"; then
+	if [[ -f "$HOME/install.sh" ]] && [[ -d "/etc/v2ray-agent" ]] && grep <$HOME/install.sh -q "author：sh1375"; then
 		mv "$HOME/install.sh" /etc/v2ray-agent/install.sh
 		local vasmaType=
 		if [[ -d "/usr/bin/" ]] ; then
@@ -3572,7 +3572,7 @@ dokodemoDoorUnblockNetflix() {
 	echoContent skyBlue "\n function 1/${totalProgress} : Any door floor machine unlock Netflix"
 	echoContent red "\n=============================================================="
 	echoContent yellow "# Precautions"
-	echoContent yellow "Any door unlock detailed, please check this article[https://github.com/mack-a/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
+	echoContent yellow "Any door unlock detailed, please check this article[https://github.com/sh1375/v2ray-agent/blob/master/documents/netflix/dokodemo-unblock_netflix.md]\n"
 
 	echoContent yellow "1.Add an outbound"
 	echoContent yellow "2.Adding a station"
@@ -4193,9 +4193,9 @@ subscribe() {
 menu() {
 	cd "$HOME" || exit
 	echoContent red "\n=============================================================="
-	echoContent green "author：mack-a"
+	echoContent green "author：sh1375"
 	echoContent green "current version：v2.5.28"
-	echoContent green "Github：https://github.com/mack-a/v2ray-agent"
+	echoContent green "Github：https://github.com/sh1375/v2ray-agent"
 	echoContent green "describe：Eight-in-one copy script\c"
 	showInstallStatus
 	echoContent red "\n=============================================================="
