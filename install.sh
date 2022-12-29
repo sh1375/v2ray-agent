@@ -610,9 +610,9 @@ mkdirTools() {
 	mkdir -p /tmp/v2ray-agent-tls/
 }
 
-# 安装工具包
+# Installation kit
 installTools() {
-	echoContent skyBlue "\n进度  $1/${totalProgress} : 安装工具"
+	echoContent skyBlue "\n进度  $1/${totalProgress} : Installation tools"
 	# 修复ubuntu个别系统问题
 	if [[ "${release}" == "ubuntu" ]]; then
 		dpkg --configure -a
@@ -622,7 +622,7 @@ installTools() {
 		pgrep -f apt | xargs kill -9
 	fi
 
-	echoContent green " ---> 检查、安装更新【新机器会很慢，如长时间无反应，请手动停止后重新执行】"
+	echoContent green " ---> Check and install updates [The new machine will be very slow, if there is no response for a long time, please stop manually and re-execute]"
 
 	${upgrade} >/etc/v2ray-agent/install.log 2>&1
 	if grep <"/etc/v2ray-agent/install.log" -q "changed"; then
@@ -637,32 +637,32 @@ installTools() {
 	#	[[ -z `find /usr/bin /usr/sbin |grep -v grep|grep -w curl` ]]
 
 	if ! find /usr/bin /usr/sbin | grep -q -w wget; then
-		echoContent green " ---> 安装wget"
+		echoContent green " ---> Install wget"
 		${installType} wget >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w curl; then
-		echoContent green " ---> 安装curl"
+		echoContent green " ---> Install curl"
 		${installType} curl >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w unzip; then
-		echoContent green " ---> 安装unzip"
+		echoContent green " ---> Install unzip"
 		${installType} unzip >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w socat; then
-		echoContent green " ---> 安装socat"
+		echoContent green " ---> Install socat"
 		${installType} socat >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w tar; then
-		echoContent green " ---> 安装tar"
+		echoContent green " ---> Install tar"
 		${installType} tar >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w cron; then
-		echoContent green " ---> 安装crontabs"
+		echoContent green " ---> Install crontabs"
 		if [[ "${release}" == "ubuntu" ]] || [[ "${release}" == "debian" ]]; then
 			${installType} cron >/dev/null 2>&1
 		else
@@ -670,42 +670,42 @@ installTools() {
 		fi
 	fi
 	if ! find /usr/bin /usr/sbin | grep -q -w jq; then
-		echoContent green " ---> 安装jq"
+		echoContent green " ---> Install jq"
 		${installType} jq >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w binutils; then
-		echoContent green " ---> 安装binutils"
+		echoContent green " ---> Install binutils"
 		${installType} binutils >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w ping6; then
-		echoContent green " ---> 安装ping6"
+		echoContent green " ---> Install ping6"
 		${installType} inetutils-ping >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w qrencode; then
-		echoContent green " ---> 安装qrencode"
+		echoContent green " ---> Install qrencode"
 		${installType} qrencode >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w sudo; then
-		echoContent green " ---> 安装sudo"
+		echoContent green " ---> Install sudo"
 		${installType} sudo >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w lsb-release; then
-		echoContent green " ---> 安装lsb-release"
+		echoContent green " ---> Install lsb-release"
 		${installType} lsb-release >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w lsof; then
-		echoContent green " ---> 安装lsof"
+		echoContent green " ---> Install lsof"
 		${installType} lsof >/dev/null 2>&1
 	fi
 
 	if ! find /usr/bin /usr/sbin | grep -q -w dig; then
-		echoContent green " ---> 安装dig"
+		echoContent green " ---> Install dig"
 		if echo "${installType}" | grep -q -w "apt"; then
 			${installType} dnsutils >/dev/null 2>&1
 		elif echo "${installType}" | grep -q -w "yum"; then
@@ -713,20 +713,20 @@ installTools() {
 		fi
 	fi
 
-	# 检测nginx版本，并提供是否卸载的选项
+	# Detect the nginx version and provide the option whether to uninstall it
 
 	if ! find /usr/bin /usr/sbin | grep -q -w nginx; then
-		echoContent green " ---> 安装nginx"
+		echoContent green " ---> Install nginx"
 		installNginxTools
 	else
 		nginxVersion=$(nginx -v 2>&1)
 		nginxVersion=$(echo "${nginxVersion}" | awk -F "[n][g][i][n][x][/]" '{print $2}' | awk -F "[.]" '{print $2}')
 		if [[ ${nginxVersion} -lt 14 ]]; then
-			read -r -p "读取到当前的Nginx版本不支持gRPC，会导致安装失败，是否卸载Nginx后重新安装 ？[y/n]:" unInstallNginxStatus
+			read -r -p "It is read that the current Nginx version does not support gRPC, which will cause the installation to fail. Whether to uninstall Nginx and reinstall it? ？[y/n]:" unInstallNginxStatus
 			if [[ "${unInstallNginxStatus}" == "y" ]]; then
 				${removeType} nginx >/dev/null 2>&1
-				echoContent yellow " ---> nginx卸载完成"
-				echoContent green " ---> 安装nginx"
+				echoContent yellow " ---> nginx Uninstall complete"
+				echoContent green " ---> Install nginx"
 				installNginxTools >/dev/null 2>&1
 			else
 				exit 0
@@ -734,7 +734,7 @@ installTools() {
 		fi
 	fi
 	if ! find /usr/bin /usr/sbin | grep -q -w semanage; then
-		echoContent green " ---> 安装semanage"
+		echoContent green " ---> Install semanage"
 		${installType} bash-completion >/dev/null 2>&1
 
 		if [[ "${centosVersion}" == "7" ]]; then
@@ -753,23 +753,23 @@ installTools() {
 	fi
 
 	if [[ ! -d "$HOME/.acme.sh" ]] || [[ -d "$HOME/.acme.sh" && -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
-		echoContent green " ---> 安装acme.sh"
+		echoContent green " ---> Install acme.sh"
 		curl -s https://get.acme.sh | sh -s >/etc/v2ray-agent/tls/acme.log 2>&1
 
 		if [[ ! -d "$HOME/.acme.sh" ]] || [[ -z $(find "$HOME/.acme.sh/acme.sh") ]]; then
-			echoContent red "  acme安装失败--->"
+			echoContent red "  acme Installation failed--->"
 			tail -n 100 /etc/v2ray-agent/tls/acme.log
-			echoContent yellow "错误排查:"
-			echoContent red "  1.获取Github文件失败，请等待Github恢复后尝试，恢复进度可查看 [https://www.githubstatus.com/]"
-			echoContent red "  2.acme.sh脚本出现bug，可查看[https://github.com/acmesh-official/acme.sh] issues"
-			echoContent red "  3.如纯IPv6机器，请设置NAT64,可执行下方命令"
+			echoContent yellow "Troubleshooting:"
+			echoContent red "  1.Obtaining the Github file failed, please wait for Github to recover and try again. The recovery progress can be viewed [https://www.githubstatus.com/]"
+			echoContent red "  2.acme.sh There is a bug in the script, you can view it[https://github.com/acmesh-official/acme.sh] issues"
+			echoContent red "  3.For pure IPv6 machines, please set up NAT64 and execute the following command"
 			echoContent skyBlue "  echo -e \"nameserver 2001:67c:2b0::4\\\nnameserver 2001:67c:2b0::6\" >> /etc/resolv.conf"
 			exit 0
 		fi
 	fi
 }
 
-# 安装Nginx
+# Install Nginx
 installNginxTools() {
 
 	if [[ "${release}" == "debian" ]]; then
@@ -816,7 +816,7 @@ EOF
 	systemctl enable nginx
 }
 
-# 安装warp
+# Install warp
 installWarp() {
 	${installType} gnupg2 -y >/dev/null 2>&1
 	if [[ "${release}" == "debian" ]]; then
@@ -834,10 +834,10 @@ installWarp() {
 		sudo rpm -ivh "http://pkg.cloudflareclient.com/cloudflare-release-el${centosVersion}.rpm" >/dev/null 2>&1
 	fi
 
-	echoContent green " ---> 安装WARP"
+	echoContent green " ---> Install WARP"
 	${installType} cloudflare-warp >/dev/null 2>&1
 	if [[ -z $(which warp-cli) ]]; then
-		echoContent red " ---> 安装WARP失败"
+		echoContent red " ---> Installation WARP failed"
 		exit 0
 	fi
 	systemctl enable warp-svc
@@ -853,29 +853,29 @@ installWarp() {
 	# systemctl daemon-reload
 	# systemctl enable cloudflare-warp
 }
-# 初始化Nginx申请证书配置
+# Initialize Nginx to apply for certificate configuration
 initTLSNginxConfig() {
 	handleNginx stop
 	echoContent skyBlue "\n进度  $1/${totalProgress} : 初始化Nginx申请证书配置"
 	if [[ -n "${currentHost}" ]]; then
 		echo
-		read -r -p "读取到上次安装记录，是否使用上次安装时的域名 ？[y/n]:" historyDomainStatus
+		read -r -p "Read the last installation record, whether to use the domain name at the time of the last installation ？[y/n]:" historyDomainStatus
 		if [[ "${historyDomainStatus}" == "y" ]]; then
 			domain=${currentHost}
 			echoContent yellow "\n ---> 域名: ${domain}"
 		else
 			echo
-			echoContent yellow "请输入要配置的域名 例: www.v2ray-agent.com --->"
+			echoContent yellow "Please enter the domain name you want to configure example: www.v2ray-agent.com --->"
 			read -r -p "域名:" domain
 		fi
 	else
 		echo
-		echoContent yellow "请输入要配置的域名 例: www.v2ray-agent.com --->"
+		echoContent yellow "Please enter the domain name you want to configure example: www.v2ray-agent.com --->"
 		read -r -p "域名:" domain
 	fi
 
 	if [[ -z ${domain} ]]; then
-		echoContent red "  域名不可为空--->"
+		echoContent red "  The domain name cannot be empty--->"
 		initTLSNginxConfig 3
 	else
 		dnsTLSDomain=$(echo "${domain}" | awk -F "[.]" '{print $(NF-1)"."$NF}')
@@ -914,7 +914,7 @@ EOF
 	readAcmeTLS
 }
 
-# 修改nginx重定向配置
+# modify nginx Redirect configuration
 updateRedirectNginxConf() {
 
 	#	if [[ ${BTPanelStatus} == "true" ]]; then
@@ -1077,9 +1077,9 @@ EOF
 
 }
 
-# 检查ip
+# check ip
 checkIP() {
-	echoContent skyBlue "\n ---> 检查域名ip中"
+	echoContent skyBlue "\n ---> Check the domain name ip in"
 	local checkDomain=${domain}
 	if [[ -n "${customPort}" ]]; then
 		checkDomain="http://${domain}:${customPort}"
@@ -1096,18 +1096,18 @@ checkIP() {
 		echoContent yellow " --->  4.如报Nginx启动问题，请手动启动nginx查看错误，如自己无法处理请提issues"
 		echoContent yellow " --->  5.错误日志:${localIP}"
 		echo
-		echoContent skyBlue " ---> 如以上设置都正确，请重新安装纯净系统后再次尝试"
+		echoContent skyBlue " ---> If the above settings are correct, please reinstall the pure system and try again"
 
 		if [[ -n ${localIP} ]]; then
-			echoContent yellow " ---> 检测返回值异常，建议手动卸载nginx后重新执行脚本"
+			echoContent yellow " ---> Abnormal return value is detected, it is recommended to manually uninstall nginx and re-execute the script"
 		fi
 		local portFirewallPortStatus="443、80"
 
 		if [[ -n "${customPort}" ]]; then
 			portFirewallPortStatus="${customPort}"
 		fi
-		echoContent red " ---> 请检查防火墙规则是否开放${portFirewallPortStatus}\n"
-		read -r -p "是否通过脚本修改防火墙规则开放${portFirewallPortStatus}端口？[y/n]:" allPortFirewallStatus
+		echoContent red " ---> Please check whether the firewall rules are open${portFirewallPortStatus}\n"
+		read -r -p "Whether to modify the firewall rules through a script to open the ${portFirewallPortStatus} port？[y/n]:" allPortFirewallStatus
 
 		if [[ ${allPortFirewallStatus} == "y" ]]; then
 			if [[ -n "${customPort}" ]]; then
@@ -1124,19 +1124,19 @@ checkIP() {
 		fi
 	else
 		if echo "${localIP}" | awk -F "[,]" '{print $2}' | grep -q "." || echo "${localIP}" | awk -F "[,]" '{print $2}' | grep -q ":"; then
-			echoContent red "\n ---> 检测到多个ip，请确认是否关闭cloudflare的云朵"
-			echoContent yellow " ---> 关闭云朵后等待三分钟后重试"
-			echoContent yellow " ---> 检测到的ip如下:[${localIP}]"
+			echoContent red "\n ---> Multiple ips are detected, please confirm whether to turn off cloudflare's cloud"
+			echoContent yellow " ---> After turning off the clouds, wait three minutes and try again"
+			echoContent yellow " ---> The detected IP is as follows:[${localIP}]"
 			exit 0
 		fi
-		echoContent green " ---> 当前域名ip为:[${localIP}]"
+		echoContent green " ---> The current domain name ip is:[${localIP}]"
 	fi
 
 }
-# 自定义email
+# customize email
 customSSLEmail() {
 	if echo "$1" | grep -q "validate email"; then
-		read -r -p "是否重新输入邮箱地址[y/n]:" sslEmailStatus
+		read -r -p "Whether to re-enter the email address [y/n]:" sslEmailStatus
 		if [[ "${sslEmailStatus}" == "y" ]]; then
 			sed '/ACCOUNT_EMAIL/d' /root/.acme.sh/account.conf >/root/.acme.sh/account.conf_tmp && mv /root/.acme.sh/account.conf_tmp /root/.acme.sh/account.conf
 		else
@@ -1146,27 +1146,27 @@ customSSLEmail() {
 
 	if [[ -d "/root/.acme.sh" && -f "/root/.acme.sh/account.conf" ]]; then
 		if ! grep -q "ACCOUNT_EMAIL" <"/root/.acme.sh/account.conf" && ! echo "${sslType}" | grep -q "letsencrypt"; then
-			read -r -p "请输入邮箱地址:" sslEmail
+			read -r -p "Please enter your email address:" sslEmail
 			if echo "${sslEmail}" | grep -q "@"; then
 				echo "ACCOUNT_EMAIL='${sslEmail}'" >>/root/.acme.sh/account.conf
-				echoContent green " ---> 添加成功"
+				echoContent green " ---> Added successfully"
 			else
-				echoContent yellow "请重新输入正确的邮箱格式[例: username@example.com]"
+				echoContent yellow "Please re-enter the correct email format [example: username@example.com]"
 				customSSLEmail
 			fi
 		fi
 	fi
 
 }
-# 选择ssl安装类型
+# Select ssl installation type
 switchSSLType() {
 	if [[ -z "${sslType}" ]]; then
 		echoContent red "\n=============================================================="
-		echoContent yellow "1.letsencrypt[默认]"
+		echoContent yellow "1.letsencrypt[default]"
 		echoContent yellow "2.zerossl"
-		echoContent yellow "3.buypass[不支持DNS申请]"
+		echoContent yellow "3.buypass[DNS request is not supported]"
 		echoContent red "=============================================================="
-		read -r -p "请选择[回车]使用默认:" selectSSLType
+		read -r -p "Please select [enter] to use the default:" selectSSLType
 		case ${selectSSLType} in
 		1)
 			sslType="letsencrypt"
@@ -1187,7 +1187,7 @@ switchSSLType() {
 	fi
 }
 
-# 选择acme安装证书方式
+# Choose the acme installation certificate method
 selectAcmeInstallSSL() {
 	local installSSLIPv6=
 	if echo "${localIP}" | grep -q ":"; then
@@ -1196,13 +1196,13 @@ selectAcmeInstallSSL() {
 	echo
 	if [[ -n "${customPort}" ]]; then
 		if [[ "${selectSSLType}" == "3" ]]; then
-			echoContent red " ---> buypass不支持免费通配符证书"
+			echoContent red " ---> buypass Free wildcard certificates are not supported"
 			echo
 			exit
 		fi
 		dnsSSLStatus=true
 	else
-		read -r -p "是否使用DNS申请证书[y/n]:" installSSLDNStatus
+		read -r -p "Whether to use DNS to apply for a certificate [y/n]:" installSSLDNStatus
 		if [[ ${installSSLDNStatus} == 'y' ]]; then
 			dnsSSLStatus=true
 		fi
@@ -1212,7 +1212,7 @@ selectAcmeInstallSSL() {
 	readAcmeTLS
 }
 
-# 安装SSL证书
+# Install SSL certificate
 acmeInstallSSL() {
 	if [[ "${dnsSSLStatus}" == "true" ]]; then
 
@@ -1221,79 +1221,79 @@ acmeInstallSSL() {
 		local txtValue=
 		txtValue=$(tail -n 10 /etc/v2ray-agent/tls/acme.log | grep "TXT value" | awk -F "'" '{print $2}')
 		if [[ -n "${txtValue}" ]]; then
-			echoContent green " ---> 请手动添加DNS TXT记录"
-			echoContent yellow " ---> 添加方法请参考此教程，https://github.com/sh1375/v2ray-agent/blob/master/documents/dns_txt.md"
-			echoContent yellow " ---> 如同一个域名多台机器安装通配符证书，请添加多个TXT记录，不需要修改以前添加的TXT记录"
+			echoContent green " ---> Please add DNS TXT record manually"
+			echoContent yellow " ---> Please refer to this tutorial for adding methods，https://github.com/sh1375/v2ray-agent/blob/master/documents/dns_txt.md"
+			echoContent yellow " ---> Just like installing wildcard certificates on multiple machines for a domain name, please add multiple TXT records. You don't need to modify the previously added TXT records."
 			echoContent green " --->  name：_acme-challenge"
 			echoContent green " --->  value：${txtValue}"
-			echoContent yellow " ---> 添加完成后等请等待1-2分钟"
+			echoContent yellow " ---> Please wait 1-2 minutes after the addition is complete"
 			echo
-			read -r -p "是否添加完成[y/n]:" addDNSTXTRecordStatus
+			read -r -p "Whether the addition is complete[y/n]:" addDNSTXTRecordStatus
 			if [[ "${addDNSTXTRecordStatus}" == "y" ]]; then
 				local txtAnswer=
 				txtAnswer=$(dig +nocmd "_acme-challenge.${dnsTLSDomain}" txt +noall +answer | awk -F "[\"]" '{print $2}')
 				if echo "${txtAnswer}" | grep -q "${txtValue}"; then
-					echoContent green " ---> TXT记录验证通过"
-					echoContent green " ---> 生成证书中"
+					echoContent green " ---> TXT record verified"
+					echoContent green " ---> Generating a certificate"
 					sudo "$HOME/.acme.sh/acme.sh" --renew -d "*.${dnsTLSDomain}" -d "${dnsTLSDomain}" --yes-I-know-dns-manual-mode-enough-go-ahead-please --ecc --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
 				else
-					echoContent red " ---> 验证失败，请等待1-2分钟后重新尝试"
+					echoContent red " ---> Verification failed, please wait 1-2 minutes and try again"
 					acmeInstallSSL
 				fi
 			else
-				echoContent red " ---> 放弃"
+				echoContent red " ---> Give up"
 				exit 0
 			fi
 		fi
 	else
-		echoContent green " ---> 生成证书中"
+		echoContent green " ---> Generating a certificate"
 		sudo "$HOME/.acme.sh/acme.sh" --issue -d "${tlsDomain}" --standalone -k ec-256 --server "${sslType}" ${installSSLIPv6} 2>&1 | tee -a /etc/v2ray-agent/tls/acme.log >/dev/null
 	fi
 }
-# 自定义端口
+# Custom port
 customPortFunction() {
 	local historyCustomPortStatus=
 	local showPort=
 	if [[ -n "${customPort}" || -n "${currentPort}" ]]; then
 		echo
-		read -r -p "读取到上次安装时的端口，是否使用上次安装时的端口 ？[y/n]:" historyCustomPortStatus
+		read -r -p "Read the port at the time of the last installation, whether to use the port at the time of the last installation ？[y/n]:" historyCustomPortStatus
 		if [[ "${historyCustomPortStatus}" == "y" ]]; then
 			showPort="${currentPort}"
 			if [[ -n "${customPort}" ]]; then
 				showPort="${customPort}"
 			fi
-			echoContent yellow "\n ---> 端口: ${showPort}"
+			echoContent yellow "\n ---> port: ${showPort}"
 		fi
 	fi
 
 	if [[ "${historyCustomPortStatus}" == "n" ]] && [[ -z "${customPort}" && -z "${currentPort}" ]]; then
 		echo
-		echoContent yellow "请输入端口[默认: 443]，如自定义端口，只允许使用DNS申请证书[回车使用默认]"
-		read -r -p "端口:" customPort
+		echoContent yellow "Please enter the port [default: 443]，If you customize the port, only DNS is allowed to apply for a certificate [enter to use the default]"
+		read -r -p "Port:" customPort
 		if [[ -n "${customPort}" ]]; then
 			if ((customPort >= 1 && customPort <= 65535)); then
 				checkCustomPort
 				allowPort "${customPort}"
 			else
-				echoContent red " ---> 端口输入错误"
+				echoContent red " ---> Port input error"
 				exit
 			fi
 		else
-			echoContent yellow "\n ---> 端口: 443"
+			echoContent yellow "\n ---> Port: 443"
 		fi
 	fi
 }
 
-# 检测端口是否占用
+# Detect whether the port is occupied
 checkCustomPort() {
 	if lsof -i "tcp:${customPort}" | grep -q LISTEN; then
-		echoContent red "\n ---> ${customPort}端口被占用，请手动关闭后安装\n"
+		echoContent red "\n ---> ${customPort}The port is occupied, please close it manually and install it\n"
 		lsof -i tcp:80 | grep LISTEN
 		exit 0
 	fi
 }
 
-# 安装TLS
+# Install TLS
 installTLS() {
 	echoContent skyBlue "\n进度  $1/${totalProgress} : 申请TLS证书\n"
 	local tlsDomain=${domain}
