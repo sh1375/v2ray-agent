@@ -1497,7 +1497,7 @@ installCronTLS() {
 	local historyCrontab
 	historyCrontab=$(sed '/v2ray-agent/d;/acme.sh/d' /etc/v2ray-agent/backup_crontab.cron)
 	echo "${historyCrontab}" >/etc/v2ray-agent/backup_crontab.cron
-	echo "30 1 * * * /bin/bash /etc/v2ray-agent/install.sh RenewTLS >> /etc/v2ray-agent/crontab_tls.log 2>&1" >>/etc/v2ray-agent/backup_crontab.cron
+	echo "30 4 * * * /usr/bin/bash /etc/v2ray-agent/install.sh RenewTLS >> /etc/v2ray-agent/crontab_tls.log 2>&1" >> /etc/v2ray-agent/backup_crontab.cron
 	crontab /etc/v2ray-agent/backup_crontab.cron
 	echoContent green "\n ---> Successfully added the scheduled maintenance certificate"
 }
