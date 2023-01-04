@@ -1490,9 +1490,9 @@ handleNginx() {
 	fi
 }
 
-# 定时任务更新tls证书
+# Scheduled tasks to update tls certificates
 installCronTLS() {
-	echoContent skyBlue "\n进度 $1/${totalProgress} : Add scheduled maintenance certificate"
+	echoContent skyBlue "\nProgress $1/${totalProgress} : Add scheduled maintenance certificate"
 	crontab -l >/etc/v2ray-agent/backup_crontab.cron
 	local historyCrontab
 	historyCrontab=$(sed '/v2ray-agent/d;/acme.sh/d' /etc/v2ray-agent/backup_crontab.cron)
