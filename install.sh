@@ -3095,42 +3095,42 @@ customCDNIP() {
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
 
 	echoContent skyBlue "----------------------------"
-	read -r -p "Please select [Enter not used]:" selectCloudflareType
-	case ${selectCloudflareType} in
+	read -r -p "Please select [Enter not used]:" selectCDNType
+	case ${selectCDNType} in
 	1)
-		add="104.19.223.39"
+		setDomain="104.19.223.39"
 		;;
 	2)
-		add="23.227.39.83"
+		setDomain="23.227.39.83"
 		;;
 	3)
-		add="snapp.ir"
+		setDomain="snapp.ir"
 		;;
 	4)
-		add="arvancloud.ir"
+		setDomain="arvancloud.ir"
 		;;
 	5)
-		add="panel.arvancloud.ir"
+		setDomain="panel.arvancloud.ir"
 		;;
 	6)
-		add="aionet.ir"
+		setDomain="aionet.ir"
 		;;
 	7)
-		add="yektanet.com"
+		setDomain="yektanet.com"
 		;;
 	8)
-		add="abplus.ir"
+		setDomain="abplus.ir"
 		;;
 	9)
-		add="moe.gov.ir"
+		setDomain="moe.gov.ir"
 		;;
 	10)
-		add="women.gov.ir"
+		setDomain="women.gov.ir"
 		;;
 	11)
-		add="tiwall.com"		;;
+		setDomain="tiwall.com"		;;
 	*)
-		add="${domain}"
+		setDomain="${domain}"
 		echoContent yellow "\n ---> not used"
 		;;
 	esac
@@ -3777,40 +3777,40 @@ updateV2RayCDN() {
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
 	echoContent yellow " 12.Custom CDN: IP / Domain"
 	echoContent red "=============================================================="
-		read -r -p "Please select:" selectCloudflareType
-		case ${selectCloudflareType} in
+		read -r -p "Please select:" selectCDNType
+		case ${selectCDNType} in
 	1)
-		add="104.19.223.39"
+		setDomain="104.19.223.39"
 		;;
 	2)
-		add="23.227.39.83"
+		setDomain="23.227.39.83"
 		;;
 	3)
-		add="snapp.ir"
+		setDomain="snapp.ir"
 		;;
 	4)
-		add="arvancloud.ir"
+		setDomain="arvancloud.ir"
 		;;
 	5)
-		add="panel.arvancloud.ir"
+		setDomain="panel.arvancloud.ir"
 		;;
 	6)
-		add="aionet.ir"
+		setDomain="aionet.ir"
 		;;
 	7)
-		add="yektanet.com"
+		setDomain="yektanet.com"
 		;;
 	8)
-		add="abplus.ir"
+		setDomain="abplus.ir"
 		;;
 	9)
-		add="moe.gov.ir"
+		setDomain="moe.gov.ir"
 		;;
 	10)
-		add="women.gov.ir"
+		setDomain="women.gov.ir"
 		;;
 	11)
-		add="tiwall.com"
+		setDomain="tiwall.com"
 		;;
 	12)
 		read -r -p "Please enter the CDN IP or domain name you want to customize:" setDomain
