@@ -3095,8 +3095,8 @@ customCDNIP() {
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
 
 	echoContent skyBlue "----------------------------"
-	read -r -p "Please select [Enter not used]:" selectCDNType
-	case ${selectCDNType} in
+	read -r -p "Please select [Enter not used]:" selectCloudflareType
+	case ${selectCloudflareType} in
 	1)
 		add="104.19.223.39"
 		;;
@@ -3775,10 +3775,10 @@ updateV2RayCDN() {
     echoContent yellow " 9.Ministry of Energy: moe.gov.ir [Known as sulfur oxide producer]"
 	echoContent yellow " 10.ArvanCloud: women.gov.ir [Not the betternet for sure I mean :))) ]"
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
-	echoContent yellow "12.Custom CDN: IP / Domain"
+	echoContent yellow " 12.Custom CDN: IP / Domain"
 	echoContent red "=============================================================="
-		read -r -p "Please select:" selectCDNType
-		case ${selectCDNType} in
+		read -r -p "Please select:" selectCloudflareType
+		case ${selectCloudflareType} in
 	1)
 		add="104.19.223.39"
 		;;
