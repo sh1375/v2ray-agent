@@ -3759,7 +3759,7 @@ updateV2RayCDN() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Modify CDN node"
 
 	if [[ -n "${currentAdd}" ]]; then
-	echoContent red "=============================================================="
+	echoContent red "\n=============================================================="
 	echoContent yellow "# Notes"
 	echoContent yellow "\nTutorial address:"
 	echoContent skyBlue "https://github.com/sh1375/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
@@ -3776,8 +3776,9 @@ updateV2RayCDN() {
 	echoContent yellow " 10.ArvanCloud: women.gov.ir [Not the betternet for sure I mean :))) ]"
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
 	echoContent yellow " 12.Custom CDN: IP / Domain"
-	echoContent red "=============================================================="
-	read -r -p "Please select:" selectCDNType
+	
+	echoContent skyBlue "----------------------------"
+	read -r -p "Please select [Enter not used]:" selectCDNType
 	case ${selectCDNType} in
 	1)
 		setDomain="104.19.223.39"
