@@ -3759,13 +3759,25 @@ updateV2RayCDN() {
 	echoContent skyBlue "\nProgress $1/${totalProgress} : Modify CDN node"
 
 	if [[ -n "${currentAdd}" ]]; then
-		echoContent red"=============================================================="
-		echoContent yellow "1. CNAME www.digitalocean.com"
-		echoContent yellow "2. CNAME www.cloudflare.com"
-		echoContent yellow "3. CNAME hostmonit.com"
-		echoContent yellow "4.Handmovement input"
-		echoContent red"=============================================================="
-		read -r -p "Please Choose:" selectCDNType
+	echoContent red "=============================================================="
+	echoContent yellow "# Notes"
+	echoContent yellow "\nTutorial address:"
+	echoContent skyBlue "https://github.com/sh1375/v2ray-agent/blob/master/documents/optimize_V2Ray.md"
+	echoContent red "\nIf you don't know about the optimization, please pass this step and press Enter instead"
+	echoContent yellow "\n 1.MCCI / Taliya - CloudFlare: 104.19.223.39"
+	echoContent yellow " 2.CloudFlare: 23.227.39.83"
+	echoContent yellow " 3.Snapp!: snapp.ir [Recommended]"
+	echoContent yellow " 4.ArvanCloud: arvancloud.ir [Recommended]"
+	echoContent yellow " 5.ArvanCloud: panel.arvancloud.ir"
+	echoContent yellow " 6.AIOnet: aionet.ir [Recommended]"
+    echoContent yellow " 7.Yektanet: yektanet.com"
+	echoContent yellow " 8.ArvanCloud: abplus.ir (AyandehBank)"
+    echoContent yellow " 9.Ministry of Energy: moe.gov.ir [Known as sulfur oxide producer]"
+	echoContent yellow " 10.ArvanCloud: women.gov.ir [Not the betternet for sure I mean :))) ]"
+	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
+	echoContent yellow " 12.Custom CDN: IP / Domain"
+	echoContent red "=============================================================="
+		read -r -p "Please select:" selectCDNType
 		case ${selectCDNType} in
 		1)
 			setDomain="104.19.223.39"
@@ -3807,10 +3819,10 @@ updateV2RayCDN() {
 
 		if [[ -n ${setDomain} ]]; then
 			if [[ -n "${currentAdd}" ]]; then
-				sed-i "s/\"${currentAdd}\"/\"${setDomain}\"/g" "$(grep "${currentAdd}" -rl ${configPath}${frontingType}. json)"
+				sed -i "s/\"${currentAdd}\"/\"${setDomain}\"/g" "$(grep "${currentAdd}" -rl ${configPath}${frontingType}.json)"
 			fi
-			if [[ $(jq-r . inbounds[0]. settings. clients[0]. add ${configPath}${frontingType}. json) == "${setDomain}" ]]; then
-				echoContent green " ---> CDNmodified successfully"
+			if [[ $(jq -r .inbounds[0].settings.clients[0].add ${configPath}${frontingType}.json) == "${setDomain}" ]]; then
+				echoContent green " ---> CDN modified successfully"
 				reloadCore
 			else
 				echoContent red " ---> Failed to modify CDN"
