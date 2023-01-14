@@ -3777,8 +3777,8 @@ updateV2RayCDN() {
 	echoContent yellow " 11.Tiwall: tiwall.com [Recommended]"
 	echoContent yellow " 12.Custom CDN: IP / Domain"
 	echoContent red "=============================================================="
-		read -r -p "Please select:" selectCDNType
-		case ${selectCDNType} in
+	read -r -p "Please select:" selectCDNType
+	case ${selectCDNType} in
 	1)
 		setDomain="104.19.223.39"
 		;;
