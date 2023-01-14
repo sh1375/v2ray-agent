@@ -3098,40 +3098,41 @@ customCDNIP() {
 	read -r -p "Please select [Enter not used]:" selectCDNType
 	case ${selectCDNType} in
 	1)
-		setDomain="104.19.223.39"
+		add="104.19.223.39"
 		;;
 	2)
-		setDomain="23.227.39.83"
+		add="23.227.39.83"
 		;;
 	3)
-		setDomain="snapp.ir"
+		add="snapp.ir"
 		;;
 	4)
-		setDomain="arvancloud.ir"
+		add="arvancloud.ir"
 		;;
 	5)
-		setDomain="panel.arvancloud.ir"
+		add="panel.arvancloud.ir"
 		;;
 	6)
-		setDomain="aionet.ir"
+		add="aionet.ir"
 		;;
 	7)
-		setDomain="yektanet.com"
+		add="yektanet.com"
 		;;
 	8)
-		setDomain="abplus.ir"
+		add="abplus.ir"
 		;;
 	9)
-		setDomain="moe.gov.ir"
+		add="moe.gov.ir"
 		;;
 	10)
-		setDomain="women.gov.ir"
+		add="women.gov.ir"
 		;;
 	11)
-		setDomain="tiwall.com"		;;
+		add="tiwall.com"
+		;;
 	*)
-		setDomain="${domain}"
-		echoContent yellow "\n ---> not used"
+		add="${domain}"
+		echoContent yellow "\n ---> don't use"
 		;;
 	esac
 }
