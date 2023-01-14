@@ -3765,7 +3765,7 @@ updateV2RayCDN() {
 		echoContent yellow "3. CNAME hostmonit.com"
 		echoContent yellow "4.Handmovement input"
 		echoContent red"=============================================================="
-		read-r-p "Please Choose:" selectCDNType
+		read -r -p "Please Choose:" selectCDNType
 		case ${selectCDNType} in
 		1)
 			setDomain="104.19.223.39"
