@@ -5298,16 +5298,16 @@ cronRenewTLS() {
 }
 # 账号管理
 manageAccount() {
-    echoContent skyBlue "\n功能 1/${totalProgress} : 账号管理"
+	echoContent skyBlue "\nFunction 1/${totalProgress} : Account Management"
     echoContent red "\n=============================================================="
-    echoContent yellow "# 每次删除、添加账号后，需要重新查看订阅生成订阅"
-    echoContent yellow "# 如安装了Hysteria，账号会同时添加到Hysteria\n"
-    echoContent yellow "1.查看账号"
-    echoContent yellow "2.查看订阅"
-    echoContent yellow "3.添加用户"
-    echoContent yellow "4.删除用户"
+	echoContent yellow "# Every time you delete or add an account, you need to re-check the subscription to generate a subscription"
+	echoContent yellow "# If Hysteria is installed, the account will be added to Hysteria at the same time\n"
+	echoContent yellow "1.View account"
+	echoContent yellow "2.View subscription"
+	echoContent yellow "3.Add user"
+	echoContent yellow "4.Delete user"
     echoContent red "=============================================================="
-    read -r -p "请输入:" manageAccountStatus
+    read -r -p "Please enter:" manageAccountStatus
     if [[ "${manageAccountStatus}" == "1" ]]; then
         showAccounts 1
     elif [[ "${manageAccountStatus}" == "2" ]]; then
@@ -5408,13 +5408,13 @@ manageHysteria() {
     echoContent red "\n=============================================================="
     local hysteriaStatus=
     if [[ -n "${hysteriaConfigPath}" ]]; then
-        echoContent yellow "1.重新安装"
-        echoContent yellow "2.卸载"
-        echoContent yellow "3.更新core"
-        echoContent yellow "4.查看日志"
+		echoContent yellow "1.Reinstall"
+		echoContent yellow "2.Uninstall"
+		echoContent yellow "3.upgrade core"
+		echoContent yellow "4.View log"
         hysteriaStatus=true
     else
-        echoContent yellow "1.安装"
+		echoContent yellow "1.Install"
     fi
 
     echoContent red "=============================================================="
@@ -5432,54 +5432,51 @@ manageHysteria() {
 }
 # 主菜单
 menu() {
-    cd "$HOME" || exit
-    echoContent red "\n=============================================================="
-    echoContent green "作者:sh1375"
-    echoContent green "当前版本:v2.6.20"
-    echoContent green "Github:https://github.com/mack-a/v2ray-agent"
-    echoContent green "描述:八合一共存脚本\c"
-    showInstallStatus
-    echoContent red "\n=============================================================="
-    echoContent red "                        推广区                      "
-    echoContent green "AFF捐赠：https://github.com/mack-a/v2ray-agent/blob/master/documents/donation_aff.md\n"
-    echoContent red "=============================================================="
-    if [[ -n "${coreInstallType}" ]]; then
-        echoContent yellow "1.重新安装"
+	cd "$HOME" || exit
+	echoContent red "\n=============================================================="
+	echoContent green "author:sh1375"
+	echoContent green "Current version: v2.6.20"
+	echoContent green "Github:https://github.com/sh1375/v2ray-agent"
+	echoContent green "Description: 8-in-1 coexistence script\c"
+	showInstallStatus
+	echoContent red "\n=============================================================="
+	if [[ -n "${coreInstallType}" ]]; then
+        echoContent yellow "1.Reinstall"
     else
-        echoContent yellow "1.安装"
+        echoContent yellow "1.Install"
     fi
 
-    echoContent yellow "2.任意组合安装"
+    echoContent yellow "2.Install in any combination"
     if echo ${currentInstallProtocolType} | grep -q trojan; then
-        echoContent yellow "3.切换VLESS[XTLS]"
+        echoContent yellow "3.Switch VLESS[XTLS]"
     elif echo ${currentInstallProtocolType} | grep -q 0; then
-        echoContent yellow "3.切换Trojan[XTLS]"
+        echoContent yellow "3.Switch Trojan[XTLS]"
     fi
 
-    echoContent yellow "4.Hysteria管理"
-    echoContent skyBlue "-------------------------工具管理-----------------------------"
-    echoContent yellow "5.账号管理"
-    echoContent yellow "6.更换伪装站"
-    echoContent yellow "7.更新证书"
-    echoContent yellow "8.更换CDN节点"
-    echoContent yellow "9.IPv6分流"
-    echoContent yellow "10.WARP分流"
-    echoContent yellow "11.流媒体工具"
-    echoContent yellow "12.添加新端口"
-    echoContent yellow "13.BT下载管理"
-    echoContent yellow "14.切换alpn"
-    echoContent yellow "15.域名黑名单"
-    echoContent skyBlue "-------------------------版本管理-----------------------------"
-    echoContent yellow "16.core管理"
-    echoContent yellow "17.更新脚本"
-    echoContent yellow "18.安装BBR、DD脚本"
-    echoContent skyBlue "-------------------------脚本管理-----------------------------"
-    echoContent yellow "19.查看日志"
-    echoContent yellow "20.卸载脚本"
-    echoContent red "=============================================================="
-    mkdirTools
+	echoContent yellow "4.Hysteria Management"
+	echoContent skyBlue "-------------------------Tool management--------------------"
+	echoContent yellow "5.Account Management"
+	echoContent yellow "6.Replace camouflage"
+	echoContent yellow "7.Update certificate"
+	echoContent yellow "8.Change CDN Type"
+	echoContent yellow "9.IPv6 Manager"
+	echoContent yellow "10.WARP Manager"
+	echoContent yellow "11.Streaming tools"
+	echoContent yellow "12.Add new port"
+	echoContent yellow "13.Bittorrent download manager"
+	echoContent yellow "14.Switch alpn(Application-Layer Protocol Negotiation)"
+	echoContent yellow "15.Geosite category blacklist"
+	echoContent skyBlue "-------------------------Version Management--------------------"
+	echoContent yellow "16.Core Management"
+	echoContent yellow "17.Update Script"
+	echoContent yellow "18.Install BBR"
+	echoContent skyBlue "-------------------------Script management--------------------"
+	echoContent yellow "19.View log"
+	echoContent yellow "20.Uninstall script"
+	echoContent red "=============================================================="
+	mkdirTools
     aliasInstall
-    read -r -p "请选择:" selectInstallType
+    read -r -p "Please select:" selectInstallType
     case ${selectInstallType} in
     1)
         selectCoreInstall
