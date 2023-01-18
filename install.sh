@@ -2411,7 +2411,7 @@ EOF
 		"clients": [
 		  {
 			"password": "${uuid}",
-			"email": "${domain}_Trojan_TCP"
+			"email": "${domain}_${uuid}_Trojan_TCP"
 		  }
 		],
 		"fallbacks":[
@@ -2448,7 +2448,7 @@ EOF
 		"clients": [
 		  {
 			"id": "${uuid}",
-			"email": "${domain}_VLESS_WS"
+			"email": "${domain}_${uuid}_VLESS_WS"
 		  }
 		],
 		"decryption": "none"
@@ -2486,7 +2486,7 @@ EOF
                 "clients": [
                     {
                         "password": "${uuid}",
-                        "email": "${domain}_Trojan_gRPC"
+                        "email": "${domain}_${uuid}_Trojan_gRPC"
                     }
                 ],
                 "fallbacks": [
@@ -2528,7 +2528,7 @@ EOF
         "id": "${uuid}",
         "alterId": 0,
         "add": "${add}",
-        "email": "${domain}_VMess_WS"
+        "email": "${domain}_${uuid}_VMess_WS"
       }
     ]
   },
@@ -2562,7 +2562,7 @@ EOF
                 {
                     "id": "${uuid}",
                     "add": "${add}",
-                    "email": "${domain}_VLESS_gRPC"
+                    "email": "${domain}_${uuid}_VLESS_gRPC"
                 }
             ],
             "decryption": "none"
@@ -2599,7 +2599,7 @@ EOF
      {
         "id": "${uuid}",
         "add":"${add}",
-        "email": "${domain}_VLESS_TCP"
+        "email": "${domain}_${uuid}_VLESS_TCP"
       }
     ],
     "decryption": "none",
@@ -2826,7 +2826,7 @@ EOF
 		"clients": [
 		  {
 			"password": "${uuid}",
-			"email": "${domain}_Trojan_TCP"
+			"email": "${domain}_${uuid}_Trojan_TCP"
 		  }
 		],
 		"fallbacks":[
@@ -2863,7 +2863,7 @@ EOF
 		"clients": [
 		  {
 			"id": "${uuid}",
-			"email": "${domain}_VLESS_WS"
+			"email": "${domain}_${uuid}_VLESS_WS"
 		  }
 		],
 		"decryption": "none"
@@ -2901,7 +2901,7 @@ EOF
                 "clients": [
                     {
                         "password": "${uuid}",
-                        "email": "${domain}_Trojan_gRPC"
+                        "email": "${domain}_${uuid}_Trojan_gRPC"
                     }
                 ],
                 "fallbacks": [
@@ -2941,7 +2941,7 @@ EOF
         "id": "${uuid}",
         "alterId": 0,
         "add": "${add}",
-        "email": "${domain}_VMess_WS"
+        "email": "${domain}_${uuid}_VMess_WS"
       }
     ]
   },
@@ -2975,7 +2975,7 @@ EOF
                 {
                     "id": "${uuid}",
                     "add": "${add}",
-                    "email": "${domain}_VLESS_gRPC"
+                    "email": "${domain}_${uuid}_VLESS_gRPC"
                 }
             ],
             "decryption": "none"
@@ -3013,7 +3013,7 @@ EOF
         "id": "${uuid}",
         "add":"${add}",
         "flow":"xtls-rprx-vision,none",
-        "email": "${domain}_VLESS_TCP/XTLS"
+        "email": "${domain}_${uuid}_VLESS_TCP/XTLS"
       }
     ],
     "decryption": "none",
