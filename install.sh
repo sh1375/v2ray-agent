@@ -385,17 +385,17 @@ allowPort() {
     fi
 }
 
-# 检查8080、443端口占用情况
+# 检查80、443端口占用情况
 checkPortUsedStatus() {
-    if lsof -i tcp:8080 | grep -q LISTEN; then
-        echoContent red "\n ---> 8080端口被占用，请手动关闭后安装\n"
-        lsof -i tcp:8080 | grep LISTEN
+    if lsof -i tcp:80 | grep -q LISTEN; then
+        echoContent red "\n ---> 80端口被占用，请手动关闭后安装\n"
+        lsof -i tcp:80 | grep LISTEN
         exit 0
     fi
 
     if lsof -i tcp:443 | grep -q LISTEN; then
         echoContent red "\n ---> 443端口被占用，请手动关闭后安装\n"
-        lsof -i tcp:8080 | grep LISTEN
+        lsof -i tcp:80 | grep LISTEN
         exit 0
     fi
 }
@@ -872,7 +872,7 @@ initTLSNginxConfig() {
     else
         dnsTLSDomain=$(echo "${domain}" | awk -F "[.]" '{print $(NF-1)"."$NF}')
         customPortFunction
-        local port=8080
+        local port=80
         if [[ -n "${customPort}" ]]; then
             port=${customPort}
         fi
@@ -934,7 +934,7 @@ updateRedirectNginxConf() {
     fi
     cat <<EOF >${nginxConfigPath}alone.conf
 server {
-	listen 8080;
+	listen 80;
 	server_name ${domain};
 	return 302 https://${redirectDomain};
 }
@@ -1093,7 +1093,7 @@ checkIP() {
         if [[ -n ${localIP} ]]; then
             echoContent yellow " ---> 检测返回值异常，建议手动卸载nginx后重新执行脚本"
         fi
-        local portFirewallPortStatus="443、8080"
+        local portFirewallPortStatus="443、80"
 
         if [[ -n "${customPort}" ]]; then
             portFirewallPortStatus="${customPort}"
@@ -1105,7 +1105,7 @@ checkIP() {
             if [[ -n "${customPort}" ]]; then
                 allowPort "${customPort}"
             else
-                allowPort 8080
+                allowPort 80
                 allowPort 443
             fi
 
@@ -1280,7 +1280,7 @@ customPortFunction() {
 checkCustomPort() {
     if lsof -i "tcp:${customPort}" | grep -q LISTEN; then
         echoContent red "\n ---> ${customPort}端口被占用，请手动关闭后安装\n"
-        lsof -i tcp:8080 | grep LISTEN
+        lsof -i tcp:80 | grep LISTEN
         exit 0
     fi
 }
@@ -1336,8 +1336,8 @@ installTLS() {
 
             installTLSCount=1
             echo
-            echoContent red " ---> TLS安装失败，正在检查8080、443端口是否开放"
-            allowPort 8080
+            echoContent red " ---> TLS安装失败，正在检查80、443端口是否开放"
+            allowPort 80
             allowPort 443
             echoContent yellow " ---> 重新尝试安装TLS证书"
 
@@ -1364,8 +1364,8 @@ initNginxConfig() {
 
     cat <<EOF >${nginxConfigPath}alone.conf
 server {
-    listen 8080;
-    listen [::]:8080;
+    listen 80;
+    listen [::]:80;
     server_name ${domain};
     root /usr/share/nginx/html;
     location ~ /.well-known {allow all;}
@@ -4684,20 +4684,20 @@ setDokodemoDoorUnblockStreamingMediaOutbounds() {
 
     if [[ -n "${setIP}" ]]; then
 
-        unInstallOutbounds streamingMedia-8080
+        unInstallOutbounds streamingMedia-80
         unInstallOutbounds streamingMedia-443
 
-        outbounds=$(jq -r ".outbounds += [{\"tag\":\"streamingMedia-8080\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22387\"}},{\"tag\":\"streamingMedia-443\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22388\"}}]" ${configPath}10_ipv4_outbounds.json)
+        outbounds=$(jq -r ".outbounds += [{\"tag\":\"streamingMedia-80\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22387\"}},{\"tag\":\"streamingMedia-443\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22388\"}}]" ${configPath}10_ipv4_outbounds.json)
 
         echo "${outbounds}" | jq . >${configPath}10_ipv4_outbounds.json
 
         if [[ -f "${configPath}09_routing.json" ]]; then
-            unInstallRouting streamingMedia-8080 outboundTag
+            unInstallRouting streamingMedia-80 outboundTag
             unInstallRouting streamingMedia-443 outboundTag
 
             local routing
 
-            routing=$(jq -r ".routing.rules += [{\"type\":\"field\",\"port\":8080,\"domain\":[\"ip.sb\",\"geosite:${domainList//,/\",\"geosite:}\"],\"outboundTag\":\"streamingMedia-8080\"},{\"type\":\"field\",\"port\":443,\"domain\":[\"ip.sb\",\"geosite:${domainList//,/\",\"geosite:}\"],\"outboundTag\":\"streamingMedia-443\"}]" ${configPath}09_routing.json)
+            routing=$(jq -r ".routing.rules += [{\"type\":\"field\",\"port\":80,\"domain\":[\"ip.sb\",\"geosite:${domainList//,/\",\"geosite:}\"],\"outboundTag\":\"streamingMedia-80\"},{\"type\":\"field\",\"port\":443,\"domain\":[\"ip.sb\",\"geosite:${domainList//,/\",\"geosite:}\"],\"outboundTag\":\"streamingMedia-443\"}]" ${configPath}09_routing.json)
 
             echo "${routing}" | jq . >${configPath}09_routing.json
         else
@@ -4708,12 +4708,12 @@ setDokodemoDoorUnblockStreamingMediaOutbounds() {
     "rules": [
       {
         "type": "field",
-        "port": 8080,
+        "port": 80,
         "domain": [
           "ip.sb",
           "geosite:${domainList//,/\",\"geosite:}"
         ],
-        "outboundTag": "streamingMedia-8080"
+        "outboundTag": "streamingMedia-80"
       },
       {
         "type": "field",
@@ -4766,7 +4766,7 @@ setDokodemoDoorUnblockStreamingMediaInbounds() {
       "protocol": "dokodemo-door",
       "settings": {
         "address": "0.0.0.0",
-        "port": 8080,
+        "port": 80,
         "network": "tcp",
         "followRedirect": false
       },
@@ -4776,7 +4776,7 @@ setDokodemoDoorUnblockStreamingMediaInbounds() {
           "http"
         ]
       },
-      "tag": "streamingMedia-8080"
+      "tag": "streamingMedia-80"
     },
     {
       "listen": "0.0.0.0",
@@ -4826,11 +4826,11 @@ EOF
 EOF
 
         if [[ -f "${configPath}09_routing.json" ]]; then
-            unInstallRouting streamingMedia-8080 inboundTag
+            unInstallRouting streamingMedia-80 inboundTag
             unInstallRouting streamingMedia-443 inboundTag
 
             local routing
-            routing=$(jq -r ".routing.rules += [{\"source\":[\"${setIPs//,/\",\"}\"],\"type\":\"field\",\"inboundTag\":[\"streamingMedia-8080\",\"streamingMedia-443\"],\"outboundTag\":\"direct\"},{\"domains\":[\"geosite:${domainList//,/\",\"geosite:}\"],\"type\":\"field\",\"inboundTag\":[\"streamingMedia-8080\",\"streamingMedia-443\"],\"outboundTag\":\"blackhole-out\"}]" ${configPath}09_routing.json)
+            routing=$(jq -r ".routing.rules += [{\"source\":[\"${setIPs//,/\",\"}\"],\"type\":\"field\",\"inboundTag\":[\"streamingMedia-80\",\"streamingMedia-443\"],\"outboundTag\":\"direct\"},{\"domains\":[\"geosite:${domainList//,/\",\"geosite:}\"],\"type\":\"field\",\"inboundTag\":[\"streamingMedia-80\",\"streamingMedia-443\"],\"outboundTag\":\"blackhole-out\"}]" ${configPath}09_routing.json)
             echo "${routing}" | jq . >${configPath}09_routing.json
         else
             cat <<EOF >${configPath}09_routing.json
@@ -4843,7 +4843,7 @@ EOF
                     ],
                     "type": "field",
                     "inboundTag": [
-                      "streamingMedia-8080",
+                      "streamingMedia-80",
                       "streamingMedia-443"
                     ],
                     "outboundTag": "direct"
@@ -4854,7 +4854,7 @@ EOF
                     ],
                     "type": "field",
                     "inboundTag": [
-                      "streamingMedia-8080",
+                      "streamingMedia-80",
                       "streamingMedia-443"
                     ],
                     "outboundTag": "blackhole-out"
@@ -4876,13 +4876,13 @@ EOF
 # 移除任意门解锁Netflix
 removeDokodemoDoorUnblockStreamingMedia() {
 
-    unInstallOutbounds streamingMedia-8080
+    unInstallOutbounds streamingMedia-80
     unInstallOutbounds streamingMedia-443
 
-    unInstallRouting streamingMedia-8080 inboundTag
+    unInstallRouting streamingMedia-80 inboundTag
     unInstallRouting streamingMedia-443 inboundTag
 
-    unInstallRouting streamingMedia-8080 outboundTag
+    unInstallRouting streamingMedia-80 outboundTag
     unInstallRouting streamingMedia-443 outboundTag
 
     rm -rf ${configPath}01_netflix_inbounds.json
