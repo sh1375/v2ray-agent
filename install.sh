@@ -3855,7 +3855,7 @@ addUser() {
 
         if echo ${currentInstallProtocolType} | grep -q 0; then
             local vlessUsers="${users//\,\"alterId\":0/}"
-            vlessUsers="${users//${email}/${email}_VLESS_TCP}"
+            vlessUsers="${users//${email}/${email}}"
             local vlessTcpResult
             vlessTcpResult=$(jq -r ".inbounds[0].settings.clients += [${vlessUsers}]" ${configPath}${frontingType}.json)
             echo "${vlessTcpResult}" | jq . >${configPath}${frontingType}.json
@@ -3863,7 +3863,7 @@ addUser() {
 
         if echo ${currentInstallProtocolType} | grep -q trojan; then
             local trojanXTLSUsers="${users//\,\"alterId\":0/}"
-            trojanXTLSUsers="${trojanXTLSUsers//${email}/${email}_Trojan_TCP}"
+            trojanXTLSUsers="${trojanXTLSUsers//${email}/${email}}"
             trojanXTLSUsers=${trojanXTLSUsers//"id"/"password"}
 
             local trojanXTLSResult
@@ -3873,7 +3873,7 @@ addUser() {
 
         if echo ${currentInstallProtocolType} | grep -q 1; then
             local vlessUsers="${users//\,\"alterId\":0/}"
-            vlessUsers="${vlessUsers//${email}/${email}_VLESS_TCP}"
+            vlessUsers="${vlessUsers//${email}/${email}}"
             vlessUsers="${vlessUsers//\"flow\":\"xtls-rprx-vision,none\"\,/}"
             local vlessWsResult
             vlessWsResult=$(jq -r ".inbounds[0].settings.clients += [${vlessUsers}]" ${configPath}03_VLESS_WS_inbounds.json)
@@ -3882,7 +3882,7 @@ addUser() {
 
         if echo ${currentInstallProtocolType} | grep -q 2; then
             local trojangRPCUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
-            trojangRPCUsers="${trojangRPCUsers//${email}/${email}_Trojan_gRPC}"
+            trojangRPCUsers="${trojangRPCUsers//${email}/${email}}"
             trojangRPCUsers="${trojangRPCUsers//\,\"alterId\":0/}"
             trojangRPCUsers=${trojangRPCUsers//"id"/"password"}
 
@@ -3893,7 +3893,7 @@ addUser() {
 
         if echo ${currentInstallProtocolType} | grep -q 3; then
             local vmessUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
-            vmessUsers="${vmessUsers//${email}/${email}_VMess_TCP}"
+            vmessUsers="${vmessUsers//${email}/${email}}"
             local vmessWsResult
             vmessWsResult=$(jq -r ".inbounds[0].settings.clients += [${vmessUsers}]" ${configPath}05_VMess_WS_inbounds.json)
             echo "${vmessWsResult}" | jq . >${configPath}05_VMess_WS_inbounds.json
@@ -3902,7 +3902,7 @@ addUser() {
         if echo ${currentInstallProtocolType} | grep -q 5; then
             local vlessGRPCUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
             vlessGRPCUsers="${vlessGRPCUsers//\,\"alterId\":0/}"
-            vlessGRPCUsers="${vlessGRPCUsers//${email}/${email}_VLESS_gRPC}"
+            vlessGRPCUsers="${vlessGRPCUsers//${email}/${email}}"
             local vlessGRPCResult
             vlessGRPCResult=$(jq -r ".inbounds[0].settings.clients += [${vlessGRPCUsers}]" ${configPath}06_VLESS_gRPC_inbounds.json)
             echo "${vlessGRPCResult}" | jq . >${configPath}06_VLESS_gRPC_inbounds.json
@@ -3912,7 +3912,7 @@ addUser() {
             local trojanUsers="${users//\"flow\":\"xtls-rprx-vision,none\"\,/}"
             trojanUsers="${trojanUsers//id/password}"
             trojanUsers="${trojanUsers//\,\"alterId\":0/}"
-            trojanUsers="${trojanUsers//${email}/${email}_Trojan_TCP}"
+            trojanUsers="${trojanUsers//${email}/${email}}"
 
             local trojanTCPResult
             trojanTCPResult=$(jq -r ".inbounds[0].settings.clients += [${trojanUsers}]" ${configPath}04_trojan_TCP_inbounds.json)
