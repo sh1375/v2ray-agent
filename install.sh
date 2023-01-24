@@ -934,7 +934,7 @@ updateRedirectNginxConf() {
     fi
     cat <<EOF >${nginxConfigPath}alone.conf
 server {
-	listen 8080;
+	listen 80;
 	server_name ${domain};
 	return 302 https://${redirectDomain};
 }
@@ -4723,7 +4723,7 @@ setDokodemoDoorUnblockStreamingMediaOutbounds() {
         unInstallOutbounds streamingMedia-80
         unInstallOutbounds streamingMedia-443
 
-        outbounds=$(jq -r ".outbounds += [{\"tag\":\"streamingMedia-8080\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22387\"}},{\"tag\":\"streamingMedia-443\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22388\"}}]" ${configPath}10_ipv4_outbounds.json)
+        outbounds=$(jq -r ".outbounds += [{\"tag\":\"streamingMedia-80\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22387\"}},{\"tag\":\"streamingMedia-443\",\"protocol\":\"freedom\",\"settings\":{\"domainStrategy\":\"AsIs\",\"redirect\":\"${setIP}:22388\"}}]" ${configPath}10_ipv4_outbounds.json)
 
         echo "${outbounds}" | jq . >${configPath}10_ipv4_outbounds.json
 
@@ -4749,7 +4749,7 @@ setDokodemoDoorUnblockStreamingMediaOutbounds() {
           "ip.sb",
           "geosite:${domainList//,/\",\"geosite:}"
         ],
-        "outboundTag": "streamingMedia-8080"
+        "outboundTag": "streamingMedia-80"
       },
       {
         "type": "field",
